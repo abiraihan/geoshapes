@@ -1,2 +1,2 @@
 import geoshape
-import selectgeoms
+import exception
