@@ -13,8 +13,19 @@ import geopandas
 import itertools
 import pathlib
 import exception
+import rasterio
+from scipy import interpolate
+from pykrige.ok import OrdinaryKriging
+from sklearn.neighbors import KNeighborsRegressor
 
 class splitShape:
+    
+    """
+    To split Polygon geometry into different shape that required to create
+    experimental plot / Trial design. It creates/re-creates experimental
+    plot design to summerize data to geospatially enabled space for next-step
+    mathematical modelling.
+    """
     
     @classmethod
     def splitLatin(
@@ -24,11 +35,11 @@ class splitShape:
             ):
         
         """
+        To split Polygon geometry into latin design to create a experimental plot.
+        For reference : https://online.stat.psu.edu/stat503/lesson/4/4.3
 
         Parameters
         ----------
-        cls : TYPE
-            DESCRIPTION. class method
         geoms : shapely.geometry.Point
             DESCRIPTION. Single point shapely geometry
         bufferLength : int
@@ -75,8 +86,9 @@ class splitShape:
         '''
         Parameters
         ----------
-        cls : TYPE
-            DESCRIPTION. class method
+        To split a Polygon geometry into a Circle grid, which can be used in experimental design
+        after selecting spatial location of interest.
+        
         geoms : shapely.geometry.Point
             DESCRIPTION. single shapely Point geomtery
         circleRadius : float
@@ -86,10 +98,10 @@ class splitShape:
         **kwargs : dict
             DESCRIPTION. optional parametrs
         clipInterior : boolean
-            Default is False. if True, returns intersected geomerty
+            Default is False. if True, returns intersected geomerty clipped out the innerWidth distance
         innerWidth : int
             Default is 1.
-            Assign the number of feet that it should be intersected from the whole geometry.
+            Assign the number of feet that it should be intersected from the whole geometry from the center.
         getGeom : str
             'Inner', 'Outer' and 'Both': returns the geometry as assigned
             
@@ -219,12 +231,10 @@ class splitShape:
         """
         Parameters
         ----------
-        cls : TYPE
-            DESCRIPTION. class method
         geoms : shapely.geometry.Point
-            DESCRIPTION. single shapely Point geometry
+            DESCRIPTION. A single shapely Point geometry
         circleRadius : float
-            DESCRIPTION. Insert the circleRadius in feet.
+            DESCRIPTION. Insert the circle Radius in feet.
         rotation : int, optional
             DESCRIPTION. The default is 45.
 
@@ -289,10 +299,8 @@ class splitShape:
         """
         Parameters
         ----------
-        cls : TYPE
-            DESCRIPTION.
         geoms : shapely.geometry.Point
-            DESCRIPTION. single shapely Point geometry 
+            DESCRIPTION. A single shapely Point geometry 
         sideLength : float
             DESCRIPTION. Insert the sideLength of the square geometry in feet.
         rotation : int, optional
@@ -388,16 +396,14 @@ class splitShape:
         """
         Parameters
         ----------
-        cls : TYPE
-            DESCRIPTION. class method
         geoms : shapely.geometry.Polygon
-            DESCRIPTION. single shapely polygon geometry
+            DESCRIPTION. A single shapely polygon geometry
         splits : int
             DESCRIPTION. number of splits required
         **kwargs : dict
             DESCRIPTION. 
         rotation : int
-            DESCRIPTION. Rotation angle in degree, insert the degree that required.
+            DESCRIPTION. Rotation angle in degree, it will search the major axis for the polygon from 0 to assigned degree.
             Default is 30
 
         Returns
@@ -407,13 +413,13 @@ class splitShape:
         
         Purpose
         -------
-            Split any polygon by spliting number
+            Split a polygon by spliting number
             
         Usage
         ----
             sdf = geopandas.read_file("./geoDataFrame.shp")
             fl = shapely.geometry.box(*sdf.geometry[0].bounds).intersection(sdf.geometry[0])
-            c = splitShape.splitGeom(fl, 4)
+            c = splitShape.splitGeom(geoms = fl, splits = 4, rotation = 45)
             ft = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:4326')
             ft.plot(cmap = 'Spectral')
 
@@ -422,7 +428,7 @@ class splitShape:
         cls._geoms = geoms
         cls._splits = splits
         
-        options = dict(rotation= 30)
+        options = dict(rotation= 30, singleGeom = False)
         
         for key, value in options.items():
             if key in kwargs:
@@ -495,15 +501,16 @@ class splitShape:
         print('  -- Geometry splited successfully and polygon defined accordingly')
         print(f"  -- Number of Splited Polygon before merge : {len(splited_poly)}")
         splited_poly.reset_index(drop = True, inplace = True)
-        
-        splitedPolygon = [items
-                          for sublist in [list(i)
-                                          for i in splited_poly.geometry
-                                          if i.geom_type == 'MultiPolygon']
-                          for items in sublist]+ [i for i in splited_poly.geometry
-                                                  if i.geom_type == 'Polygon']
-        
-        return splitedPolygon
+        if options['singleGeom'] == True:
+            splitedPolygon = [items
+                              for sublist in [list(i)
+                                              for i in splited_poly.geometry
+                                              if i.geom_type == 'MultiPolygon']
+                              for items in sublist]+ [i for i in splited_poly.geometry
+                                                      if i.geom_type == 'Polygon']
+            return splitedPolygon
+        else:
+            return splited_poly
 
 class checkShape:
     
@@ -516,10 +523,8 @@ class checkShape:
         """
         Parameters
         ----------
-        cls : TYPE
-            DESCRIPTION. Class method type
         data : TYPE
-            DESCRIPTION. geopandas geodataframe or shapefile path
+            DESCRIPTION. geopandas GeoDataFrame or shapefile path
 
         Returns
         -------
@@ -532,6 +537,9 @@ class checkShape:
             
         """
         cls.data = data
+        if cls.data is None:
+            raise ValueError(f"No data to read, data is {cls.data}")
+            
         if isinstance(data, str):
             gdf = geopandas.read_file(cls.data)
             
@@ -539,8 +547,9 @@ class checkShape:
             gdf = cls.data
         else:
             pass
-        gdf = gdf.set_geometry('geometry')
-        df = gdf.geometry.explode()
+        
+        kdf = gdf.set_geometry('geometry')
+        df = kdf.geometry.explode()
         df.reset_index(drop = True, inplace = True)
         geoms = []
         for i in df.geometry:
@@ -559,7 +568,7 @@ class checkShape:
             index = [i for i in range(len(geoms))],
             crs = 'EPSG:4326',
             geometry = geoms)
-        print(f"\n  --  Found No Issue : Performed Topology Check for the geometry")
+        print(f"\n  -- Found No Issue : Performed Topology Check for the geometry")
         return valiData
     
     @classmethod
@@ -573,8 +582,6 @@ class checkShape:
         """
         Parameters
         ----------
-        cls : TYPE
-            DESCRIPTION. Class Method Type
         geomPaths : str
             DESCRIPTION. directory of file path location
         pathType : str, optional
@@ -633,7 +640,7 @@ class checkShape:
                 geodata = checkData(geomfiles)
                 geomData = geodata.to_crs('EPSG:4326')
             else:
-                raise ValueError("Data location doesn't contain any shapefile, please check the 'pathType' that has been assigned ")
+                raise ValueError("Data location doesn't contain any shapefile, please check the 'pathType'/'geomPaths' that has been assigned ")
             
             pathGeoms = str(cls._geomPaths)
                 
@@ -665,6 +672,7 @@ class checkShape:
             print(f'No overlapped polygon geometry found into the data layer')
         else:
             files = geopandas.GeoDataFrame(
+                index = [i for i in range(len(geos))],
                 crs = 'EPSG:4326',
                 geometry = geos)
             path = os.path.join(
@@ -686,8 +694,6 @@ class checkShape:
         """
         Parameters
         ----------
-        cls : TYPE
-            DESCRIPTION. Class Method
         fileObjects : geopandas.GeoDataFrame
             DESCRIPTION. a geopandas geodatframe 
         geomType : str
@@ -747,15 +753,10 @@ class gridShape:
         Uses:
             
             bundary_shapefile_path = "./boundary_shapefile.shp"
-            
-            df = gpd.read_file(bundary_shapefile_path)
-            
+            df = geopandas.read_file(bundary_shapefile_path)
             grid_side_length = 10
-            
             clipped_gdf = createGrid.squareGrid(df, grid_side_length)
-            
             or,
-            
             clipped_gdf = createGrid.squareGrid(bundary_shapefile_path, grid_side_length)
 
         """
@@ -782,7 +783,10 @@ class gridShape:
         hlines = [((x1, yi), (x2, yi)) for x1, x2 in zip(x[:-1], x[1:]) for yi in y]
         vlines = [((xi, y1), (xi, y2)) for y1, y2 in zip(y[:-1], y[1:]) for xi in x]
         grids = list(shapely.ops.polygonize(shapely.geometry.MultiLineString(hlines + vlines)))
-        fg = geopandas.GeoDataFrame(crs = 'EPSG:3857', geometry = grids)
+        fg = geopandas.GeoDataFrame(
+            index = [i for i in range(len(grids))],
+            crs = 'EPSG:3857',
+            geometry = grids)
         dfGrid = fg.to_crs('EPSG:4326')
         if cls._cut == True:
             return geopandas.clip(dfGrid, gdf)
@@ -791,15 +795,15 @@ class gridShape:
     
     @classmethod
     def hexagonGrid(
-            self,
+            cls,
             gdf:geopandas.GeoDataFrame,
             spacing:int,
             cut:bool = False
             ):
         
-        self.gdf = gdf
-        self._spacing = spacing
-        self._cut = cut
+        cls.gdf = gdf
+        cls._spacing = spacing
+        cls._cut = cut
         
         """
         Return a hexagon grid, based on the shape of *gdf* and on a *spacing* value (in
@@ -819,8 +823,8 @@ class gridShape:
         grid: GeoDataFrame
             A collection of polygons.
         """
-        hSpacing = self._spacing*1e-5
-        vSpacing = self._spacing*1e-5
+        hSpacing = cls._spacing*1e-5
+        vSpacing = cls._spacing*1e-5
         hOverlay = 0.0
         vOverlay = 0.0
     
@@ -838,23 +842,20 @@ class gridShape:
         
         geoms = []
         for col in range(cols):
-            # (column + 1) and (row + 1) calculation is used to maintain
-            # topology between adjacent shapes and avoid overlaps/holes
-            # due to rounding errors
-            x1 = xmin + (col * hOverlay)    # far left
-            x2 = x1 + (xVertexHi - xVertexLo)  # left
-            x3 = xmin + (col * hOverlay) + hSpacing  # right
-            x4 = x3 + (xVertexHi - xVertexLo)  # far right
+            x1 = xmin + (col * hOverlay)
+            x2 = x1 + (xVertexHi - xVertexLo)
+            x3 = xmin + (col * hOverlay) + hSpacing
+            x4 = x3 + (xVertexHi - xVertexLo)
     
             for row in range(rows):
                 if (col % 2) == 0:
-                    y1 = ymax + (row * vOverlay) - (((row * 2) + 0) * halfVSpacing)  # hi
-                    y2 = ymax + (row * vOverlay) - (((row * 2) + 1) * halfVSpacing)  # mid
-                    y3 = ymax + (row * vOverlay) - (((row * 2) + 2) * halfVSpacing)  # lo
+                    y1 = ymax + (row * vOverlay) - (((row * 2) + 0) * halfVSpacing)
+                    y2 = ymax + (row * vOverlay) - (((row * 2) + 1) * halfVSpacing)
+                    y3 = ymax + (row * vOverlay) - (((row * 2) + 2) * halfVSpacing)
                 else:
-                    y1 = ymax + (row * vOverlay) - (((row * 2) + 1) * halfVSpacing)  # hi
-                    y2 = ymax + (row * vOverlay) - (((row * 2) + 2) * halfVSpacing)  # mid
-                    y3 = ymax + (row * vOverlay) - (((row * 2) + 3) * halfVSpacing)  # lo
+                    y1 = ymax + (row * vOverlay) - (((row * 2) + 1) * halfVSpacing)
+                    y2 = ymax + (row * vOverlay) - (((row * 2) + 2) * halfVSpacing)
+                    y3 = ymax + (row * vOverlay) - (((row * 2) + 3) * halfVSpacing)
     
                 geoms.append((
                     (x1, y2),
@@ -862,12 +863,15 @@ class gridShape:
                     (x1, y2)
                 ))
                 
-        if self._cut == True:
+        if cls._cut == True:
             hexData = geopandas.GeoDataFrame(
                 index=[i for i in range(len(geoms))],
                 geometry=pandas.Series(geoms).apply(lambda x: shapely.geometry.Polygon(x)),
                 crs=gdf.crs)
-            return geopandas.overlay(gdf, hexData, how='intersection')
+            return geopandas.overlay(
+                gdf,
+                hexData,
+                how='intersection')
         else:
             return geopandas.GeoDataFrame(
                 index=[i for i in range(len(geoms))],
@@ -884,8 +888,6 @@ class gridShape:
 
         Parameters
         ----------
-        cls : TYPE
-            DESCRIPTION.
         gdf : TYPE
             DESCRIPTION. A collection of polygon geometry as a geodataframe object
         tolerance : TYPE, optional
@@ -898,7 +900,7 @@ class gridShape:
 
         Returns
         -------
-        sanitized : TYPE
+        sanitized : geopandas.GeoDataFrame
             DESCRIPTION. A collection of polygon geometry as a geodataframe object
 
         """
@@ -910,21 +912,728 @@ class gridShape:
         
         if cls._gdf.crs == 'EPSG:4326':
         
-            geoms = [i.buffer(0.00000001).buffer(-cls._tolerance/1e9)
+            geoms = [i.buffer(1e-6).buffer(-cls._tolerance/1e9)
                      for i in [items for sublist in [list(i)
                                                      for i in cls._gdf.geometry if i.geom_type == 'MultiPolygon']
                                for items in sublist]
                      + [i for i in cls._gdf.geometry if i.geom_type == 'Polygon']]
         
-            sanitized = geopandas.GeoDataFrame(crs = 'EPSG:4326', geometry = geoms)
+            sanitized = geopandas.GeoDataFrame(
+                index = [i for i in range(len(geoms))],
+                crs = 'EPSG:4326',
+                geometry = geoms)
         else:
             toGdf = cls._gdf.to_crs('EPSG:4326')
-            geoms = [i.buffer(0.00000001).buffer(-cls._tolerance/1e9)
+            geoms = [i.buffer(1e-6).buffer(-cls._tolerance/1e9)
                      for i in [items for sublist in [list(i)
                                                      for i in toGdf.geometry if i.geom_type == 'MultiPolygon']
                                for items in sublist]
                      + [i for i in toGdf.geometry if i.geom_type == 'Polygon']]    
         
-            sanitized = geopandas.GeoDataFrame(crs = 'EPSG:4326', geometry = geoms)
-        
+            sanitized = geopandas.GeoDataFrame(
+                index = [i for i in range(len(geoms))],
+                crs = 'EPSG:4326',
+                geometry = geoms)
         return sanitized
+
+class mergeShape:
+    
+    @classmethod
+    def mergePolygon(
+            cls,
+            geomData,
+            mergedPoly:int
+            ):
+        """
+
+        Parameters
+        ----------
+        geomData : list/geopandas.GeoDataFrame
+             - List of shapely polygon geometry or geopandas GeoDataFrame.
+        mergedPoly : int
+            Least Number of Merged geometry.
+
+        Raises
+        ------
+        exception
+            - If data is not a list of geometry / A geopandas GeoDataFrame
+
+        Returns
+        -------
+        saveGeom : geopandas.GeoDataFrame
+            A geopandas GeoDataFrame
+
+        """
+        
+        cls._geomData = geomData
+        cls._mergedPoly = mergedPoly
+        
+        if isinstance(cls._geomData, list):
+            allPoly = geopandas.geoDataFrame(geometry = cls._geomData)
+            allPolyAreas = shapely.ops.unary_union(cls._geomData).area
+        elif isinstance(cls._geomData, geopandas.GeoDataFrame):
+            allPoly = cls._geomData
+            allPolyAreas = shapely.ops.unary_union([i for i in cls._geomData.geometry]).area
+        else:
+            raise exception.InputError(type(cls._geomData), "Expecting a list of geometry \
+                                       collection or geopandas GeoDataFrame.")
+        
+        equalArea = allPolyAreas/int(cls._mergedPoly)
+        geoms , geom_area = [], 0
+        saveGeom = geopandas.GeoDataFrame()
+        for index in range(len(allPoly)):
+            if index == len(allPoly) - 1:
+                geoms.append(allPoly['geometry'][index])
+                df = geopandas.GeoDataFrame(geometry = geoms)
+                bounds = geopandas.GeoDataFrame(
+                    crs = 'EPSG:4326',
+                    geometry=geopandas.GeoSeries(
+                        shapely.ops.unary_union(df.geometry).intersection(
+                        shapely.ops.unary_union(df.geometry))))
+                saveGeom = saveGeom.append(bounds)
+            elif equalArea>= geom_area:
+                geom_area += allPoly['geometry'][index].area
+                geoms.append(allPoly['geometry'][index])
+            else:
+                geoms.append(allPoly['geometry'][index])
+                df = geopandas.GeoDataFrame(geometry = geoms)
+                bounds = geopandas.GeoDataFrame(
+                    crs = 'EPSG:4326',
+                    geometry=geopandas.GeoSeries(
+                        shapely.ops.unary_union(df.geometry).intersection(
+                        shapely.ops.unary_union(df.geometry))))
+                saveGeom = saveGeom.append(bounds)
+                geoms, geom_area = [], 0
+        saveGeom.reset_index(drop = True, inplace = True)
+        return saveGeom
+    
+    @classmethod
+    def mergeSilevers(
+            cls,
+            geomData,
+            splitGeoms:int
+            ):
+        """
+
+        Parameters
+        ----------
+        geomData : list
+            - A collection of geometry.
+        splitGeoms : int
+            - Least number of geometry that geomData will be splited
+
+        Raises
+        ------
+        exception
+            - If data is not a list of geometry / A geopandas GeoDataFrame
+
+        Returns
+        -------
+        mergedGeoms : list
+            - A list of shapely polygon collection
+
+        """
+        
+        cls._geomData = geomData
+        cls._splitGeoms = splitGeoms
+        
+        if isinstance(cls._geomData, list):
+            listPoly = cls._geomData
+        elif isinstance(cls._geomData, geopandas.GeoDataFrame):
+            listPoly = [i for i in cls._geomData.geometry]
+        else:
+            raise exception.InputError(type(cls._geomsData), "Expecting a list of geometry \
+                                       collection or geopandas GeoDataFrame.")
+        
+        areas = min(sorted([i.area for i in listPoly])[-cls._splitGeoms:])
+        
+        msdDict = {i.area : i for i in listPoly}
+        
+        originalsDetected = {i : j for i, j in msdDict.items() if i>=areas}
+        sileversDetected = {i : j for i, j in msdDict.items() if i<areas}
+        
+        if len(sileversDetected) != 1:
+            sileversDetected = {i.area : i for i in [shapely.ops.unary_union([i[1] for i in sileversDetected.items()])]}
+        
+        mergedGeoms = []
+        for _, j in sileversDetected.items():
+            for _, l in originalsDetected.items():
+                if j.touches(l) == True:
+                    geoms = shapely.ops.unary_union([j, l])
+                    mergedGeoms.append(geoms)
+                else:
+                    mergedGeoms.append(l)
+        
+        return mergedGeoms
+    
+    @classmethod
+    def mergeOverlaps(
+            cls,
+            sourceGeoms:shapely.geometry.Polygon,
+            processedGeoms:list
+            ):
+        """
+
+        Parameters
+        ----------
+        sourceGeoms : shapely.geometry.Polygon
+            - A single shapely Polygon geometry.
+        processedGeoms : list
+            - A collection of shapely Polygon geometry.
+
+        Returns
+        -------
+        list
+            - A collection of shapely Polygon geometry.
+
+        """
+        
+        cls._sourceGeoms = sourceGeoms
+        cls._processedGeoms = processedGeoms
+        
+        sourceArea = cls._sourceGeoms.area*1e10 + 1
+        print(f"  --| Source Geometry Area is : {round(sourceArea, 2)} square meter")
+        processArea = sum([i.area*1e10 for i in cls._processedGeoms])
+        print(f"  --| Processed Geometry Area is : {round(processArea, 2)} square meter")
+        if sourceArea < processArea:
+            gty = [i for i in cls._processedGeoms]
+            
+            lf = []
+            for i in itertools.combinations(gty, 2):
+                if i[0].overlaps(i[1]):
+                    geo = shapely.ops.unary_union([i[0], i[1]])
+                    if i[0].area>i[1].area:
+                        lf.append(geo.difference(i[1]))
+                        lf.append(i[1])
+                    else:
+                        lf.append(geo.difference(i[0]))
+                        lf.append(i[0])
+            return [i for i in gty for j in lf if not i.intersects(j)] + lf
+        else:
+            return cls._processedGeoms
+
+class selectGeom:
+    
+    @classmethod
+    def getGeom(
+            cls,
+            geom_data
+            ):
+        """
+
+        Parameters
+        ----------
+        geom_data : shapely.geometry.Polygon
+            - A shapely Polygon geometry
+
+        Returns
+        -------
+        geopandas.GeoDataFrame
+            - A geopandas GeoDataFrame with ratio information of max and min side length.
+
+        """
+        
+        cls.geom_data = geom_data
+        
+        poly = shapely.geometry.Polygon(
+            [shapely.geometry.Point((cls.geom_data.bounds[0], cls.geom_data.bounds[3])),
+             shapely.geometry.Point((cls.geom_data.bounds[0], cls.geom_data.bounds[1])),
+             shapely.geometry.Point((cls.geom_data.bounds[2], cls.geom_data.bounds[1])),
+             shapely.geometry.Point((cls.geom_data.bounds[2], cls.geom_data.bounds[3])),
+             shapely.geometry.Point((cls.geom_data.bounds[0], cls.geom_data.bounds[3]))]
+            )
+        
+        x, y = list(poly.exterior.xy[0]), list(poly.exterior.xy[-1])
+        linefo = [shapely.geometry.LineString((shapely.geometry.Point(list(map(lambda x, y : (x, y), x, y))[i-1]), shapely.geometry.Point(list(map(lambda x, y : (x, y), x, y))[i])))
+                  for i in range(len(list(map(lambda x, y : (x, y), x, y)))) if i!=0]
+        mk = [i for i in linefo if i.length == max([linefo[i-1].length for i in range(len(linefo))])][0]
+        lk = [i for i in linefo if i.length == min([linefo[i-1].length for i in range(len(linefo))])][0]
+        df = geopandas.GeoDataFrame(crs = 'EPSG:4326', geometry = [cls.geom_data])
+        df['max_length'],  df['min_length'] = mk.length*1e5, lk.length*1e5
+        df['ratio'] = df.apply(lambda x : (x['max_length']/x['min_length']), axis = 1)
+        return df
+    
+    @classmethod
+    def getPolygon(
+            cls,
+            data:geopandas.GeoDataFrame,
+            shape:str,
+            sample:int
+            ):
+        """
+
+        Parameters
+        ----------
+        data : geopandas.GeoDataFrame
+            - A geopandas GeoDataFrame for a collection of Polygon.
+        shape : str
+            - shape Name; Accepted keyword is either ['Square', 'Rectangle', 'Square-Rectangle']
+        sample : int
+            - Number of sample required
+
+        Raises
+        ------
+        shapeError
+            - If Accepted keyword ['Square', 'Rectangle', 'Square-Rectangle'] is not mentioned.
+
+        Returns
+        -------
+        geopandas.GeoDataFrame / shapeError
+            - A geopandas GeoDataFrame
+
+        """
+        
+        cls.data = data
+        cls.shape = shape
+        cls.sample = sample
+        
+        len_data = geopandas.GeoDataFrame()
+        for index, row in cls.data.iterrows():
+            ldata = cls.getGeom(row['geometry'])
+            len_data = len_data.append(ldata)
+        len_data.reset_index(drop = True, inplace = True)
+        # if 'index' in len_data.columns.unique().tolist():del len_data['index']
+        # len_data.crs = 'EPSG:4326'
+        if cls.shape == 'Rectangle':
+            return len_data.iloc[len_data['ratio'].argsort()[-cls.sample:]], len_data.iloc[~len_data['ratio'].argsort()[-cls.sample:]]
+        elif cls.shape == 'Square':
+            return len_data.iloc[len_data['ratio'].argsort()[:cls.sample]], len_data.iloc[~len_data['ratio'].argsort()[:cls.sample]]
+        elif cls.shape == 'Square-Rectangle':
+            return len_data.iloc[len_data['ratio'].argsort()[int((len_data['ratio'].max())/2):int((len_data['ratio'].max())/2)+cls.sample]], len_data.iloc[~len_data['ratio'].argsort()[int((len_data['ratio'].max())/2):int((len_data['ratio'].max())/2)+cls.sample]]
+        else:
+            raise exception.ShapeError(cls.shape)
+    
+    @classmethod
+    def getInteriorGeoms(
+            cls,
+            geomData,
+            interiorBufferFeet:int = 1
+            ):
+        """
+        Parameters
+        ----------
+        geomData : list/geopandas.GeoDataFrame
+            - A geopandas GeoDataFrame or a list of shapely polygon geometry.
+        interiorBufferFeet : int, optional
+            - Buffer distance from polygon boundary. The default is 1.
+
+        Raises
+        ------
+        exception
+            - InputError, if data other than GeoDataFrame or list of shapely geometry.
+
+        Returns
+        -------
+        list/None
+            - Interior geometry of a list of shapely geometry or None
+        list
+            - Exterior geometry of a list of shapely geometry 
+
+        """
+        
+        cls._geomData = geomData
+        cls._interiorBufferFeet = interiorBufferFeet
+        
+        intBuffer = (1 + int(cls._interiorBufferFeet))*3.048e-6
+        
+        if isinstance(cls._geomData, geopandas.GeoDataFrame):
+            data = [i for i in cls._geomData.geometry]
+        elif isinstance(cls._geomData, list):
+            data = cls._geomData
+        else:
+            raise exception.InputError(type(cls._geomsData), "Expecting a list of geometry \
+                                       collection or geopandas GeoDataFrame.")
+        
+        bounds = shapely.ops.unary_union(data).buffer(3.048e-6).buffer(-float(intBuffer))
+        
+        exterior = [i for i in data if bounds.boundary.intersects(i)]
+        interior = [i for i in data if not bounds.boundary.intersects(i)]
+        
+        testBounds = shapely.ops.unary_union(data).buffer(3.048e-6).buffer(-float(6.096e-06))
+        
+        validOutputInterior = [i for i in interior if testBounds.boundary.intersects(i)]
+        
+        if len(validOutputInterior) == 0 and len(interior) != 0:
+            print("  -- Found both Interior & Exterior geometry")
+            return interior, exterior
+        elif len(validOutputInterior) == 0 and len(interior) == 0:
+            print("  -- No Interior, Only Exterior geometry filtered")
+            return None, exterior
+        else:
+            print("  -- Not determined, Source geometry returned as Exterior geometry after processing")
+            return None, data
+
+class utils:
+    
+    @classmethod
+    def singlePolygon(
+            cls,
+            geomsData
+            ):
+        """
+
+        Parameters
+        ----------
+        geomsData : list/geopandas.GeoDataFrame
+            - A list of shapely polygon geometry / A geopandas GeoDataFrame
+
+        Raises
+        ------
+        exception
+            - InputError, if data other than GeoDataFrame or list of shapely geometry.
+
+        Returns
+        -------
+        list
+            - A list of shapely Polygon geometry
+
+        """
+        
+        cls._geomsData = geomsData
+        
+        if isinstance(cls._geomsData, list):
+            data = cls._geomsData
+        elif isinstance(cls._geomsData, geopandas.GeoDataFrame):
+            data = [i for i in cls._geomsData.geometry]
+        else:
+            raise exception.InputError(type(cls._geomsData), "Expecting a list of geometry \
+                                       collection or geopandas GeoDataFrame.")
+        return [items for sublist in [list(i)
+                                      for i in data
+                                      if i.geom_type == 'MultiPolygon']
+                for items in sublist
+                ] + [i for i in data if i.geom_type == 'Polygon']
+    
+    @classmethod
+    def mergeData(
+            cls,
+            dataPath:str
+            ):
+        """
+
+        Parameters
+        ----------
+        dataPath : str
+            - data dircetory location for geospatially enabled data
+
+        Raises
+        ------
+        AttributeError
+            - If no geospatially enabled data found into the assigned data directory
+
+        Returns
+        -------
+        geopandas.GeoDataFrame
+            - A geopandas GeoDataFrame
+
+        """
+        
+        cls._dataPath = dataPath
+        geomfiles = [i.replace('/', '\\')
+                     for i in [os.path.join(root, file)
+                               for root, dirs, files in os.walk(f"{cls._dataPath}")
+                               for file in files
+                               if file.endswith(".shp")]]
+        checkData = lambda file : pandas.concat([
+            geopandas.read_file(shp)
+            for shp in file]).pipe(geopandas.GeoDataFrame)if len(file)>1 else geopandas.read_file(file[0])
+        if len(geomfiles) != 0:
+            return checkData(geomfiles)
+        else:
+            raise AttributeError("Data location doesn't contain any shapefile")
+    
+    @classmethod
+    def delDuplicates(
+            cls,
+            gdf:geopandas.GeoDataFrame
+            ):
+        """
+        Removes duplicate geometry along with its values from the geopandas GeoDataFrame
+
+        Parameters
+        ----------
+        gdf : geopandas.GeoDataFrame
+            - A geopandas GeoDataFrame
+
+        Returns
+        -------
+        dupGdf:geopandas.GeoDataFrame
+
+        """
+        cls._gdf = gdf
+        cls._gdf["geometry"] = cls._gdf["geometry"].apply(lambda geom: geom.wkb)
+        dupGdf = cls._gdf.drop_duplicates(["geometry"])
+        dupGdf["geometry"] = dupGdf["geometry"].apply(lambda geom: shapely.wkb.loads(geom))
+        return dupGdf
+
+class interpolation:
+    
+    def __init__(cls, gdf, attribute):
+        cls.gdf=gdf
+        cls.attribute = attribute
+        cls.x = gdf.geometry.x.values
+        cls.y = gdf.geometry.y.values
+        cls.z = gdf[attribute].values
+        cls.crs = gdf.crs
+        cls.xmax = gdf.geometry.x.max()
+        cls.xmin = gdf.geometry.x.min()
+        cls.ymax = gdf.geometry.y.max()
+        cls.ymin = gdf.geometry.y.min()
+        cls.extent = (cls.xmin, cls.xmax, cls.ymin, cls.ymax)
+        cls.res = (cls.xmax - cls.xmin) / 100
+        cls.ncol = int(numpy.ceil((cls.xmax - cls.xmin) / cls.res)) # delx
+        cls.nrow = int(numpy.ceil((cls.ymax - cls.ymin) / cls.res))# dely
+        
+    def points_to_grid(cls):
+        
+        hrange = ((cls.ymin,cls.ymax),(cls.xmin,cls.xmax))
+        zi, yi, xi = numpy.histogram2d(cls.y, cls.x, bins=(int(cls.nrow), int(cls.ncol)), weights=cls.z, normed=False,range=hrange)
+        counts, _, _ = numpy.histogram2d(cls.y, cls.x, bins=(int(cls.nrow), int(cls.ncol)),range=hrange)
+        numpy.seterr(divide='ignore',invalid='ignore')
+        zi = numpy.divide(zi,counts)
+        numpy.seterr(divide=None,invalid=None)
+        zi = numpy.ma.masked_invalid(zi)
+        array = numpy.flipud(numpy.array(zi))
+        return array
+    
+    def knn_2D(cls, k=4, weights='uniform', algorithm='brute', p=2, maxrows = 9000):
+        # Credit from 'https://github.com/rosskush/skspatial'
+        if len(cls.gdf) > maxrows:
+            raise ValueError('GeoDataFrame should not be larger than 9000 rows,\
+                             knn is a slow algorithim and can be too much for your computer,\
+                                 Change maxrows at your own risk')  # shorthand for 'raise ValueError()'
+        array = cls.points_to_grid()
+        X = []
+        frow, fcol = numpy.where(numpy.isfinite(array))
+        for i in range(len(frow)):
+            X.append([frow[i], fcol[i]])
+        y = array[frow, fcol]
+        train_X, train_y = X, y
+        knn = KNeighborsRegressor(n_neighbors=k, weights=weights, algorithm=algorithm, p=2)
+        knn.fit(train_X, train_y)
+        X_pred = []
+        for r in range(int(cls.nrow)):
+            for c in range(int(cls.ncol)):
+                X_pred.append([r, c])
+        y_pred = knn.predict(X_pred)
+        karray = numpy.zeros((cls.nrow, cls.ncol))
+        i = 0
+        for r in range(int(cls.nrow)):
+            for c in range(int(cls.ncol)):
+                karray[r, c] = y_pred[i]
+                i += 1
+        return karray
+    
+    def OrdinaryKriging_2D(cls, n_closest_points=3,variogram_model='linear',
+                           verbose=False, coordinates_type='euclidean',backend='vectorized'):
+        
+        # Credit from 'https://github.com/bsmurphy/PyKrige'
+
+        # if not pykrige_install:
+        #     raise ValueError('Pykrige is not installed, try pip install pykrige')
+
+        OK = OrdinaryKriging(cls.x,cls.y,cls.z, variogram_model=variogram_model, verbose=verbose,
+                     enable_plotting=False, coordinates_type=coordinates_type)
+
+        x,y = numpy.arange(0,cls.ncol), numpy.arange(0,cls.nrow)
+
+        xpts = numpy.arange(cls.xmin + cls.res/2,cls.xmax+cls.res/2, cls.res)
+        ypts = numpy.arange(cls.ymin + cls.res/2,cls.ymax+cls.res/2, cls.res)
+        ypts = ypts[::-1]
+
+
+        xp, yp = [],[]
+        for yi in ypts:
+            for xi in xpts:
+                xp.append(xi)
+                yp.append(yi)
+
+
+        if n_closest_points is not None:
+            backend = 'loop'
+        # krige_array, ss = OK.execute('points', x, y,n_closest_points=n_closest_points,backend=backend)
+        krige_array, ss = OK.execute('points', xp, yp,n_closest_points=n_closest_points,backend=backend)
+
+        krige_array = numpy.reshape(krige_array,(cls.nrow,cls.ncol))
+        # print(krige_array.shape)
+
+
+        return krige_array
+
+    def Spline_2D(cls):
+        # Credit from 'https://github.com/rosskush/skspatial'
+        
+        array = cls.points_to_grid()
+
+        x,y = numpy.arange(0,cls.ncol), numpy.arange(0,cls.nrow)
+        frow, fcol = numpy.where(numpy.isfinite(array))
+        X = []
+        for i in range(len(frow)):
+            X.append([frow[i], fcol[i]])
+        z = array[frow, fcol]
+
+        sarray = interpolate.RectBivariateSpline(frow,fcol,z)
+
+        return sarray
+    
+    def RBF_2D(cls):
+        array = cls.points_to_grid()
+        print(array.shape)
+
+        x,y = numpy.arange(0,cls.ncol), numpy.arange(0,cls.nrow)
+        frow, fcol = numpy.where(numpy.isfinite(array))
+        X = []
+        for i in range(len(frow)):
+            X.append([frow[i], fcol[i]])
+        z = array[frow, fcol]
+
+        rbfi = interpolate.Rbf(frow,fcol,z,kind='cubic')
+        gridx, gridy = numpy.arange(0,cls.ncol), numpy.arange(0, cls.nrow)
+        print(gridx)
+        sarray = rbfi(gridx,gridy)
+
+
+        print(sarray.shape)
+        return sarray
+    
+    def write_raster(cls,array,path):
+        if '.' not in path[-4:]:
+            path += '.tiff'
+        transform = rasterio.transform.from_origin(cls.xmin, cls.ymax, cls.res, cls.res)
+        new_dataset = rasterio.open(path, 'w', driver='GTiff',
+                                    height=array.shape[0], width=array.shape[1], count=1, dtype=array.dtype,
+                                    crs=cls.gdf.crs, transform=transform, nodata=numpy.nan)
+        new_dataset.write(array, 1)
+        new_dataset.close()
+        return new_dataset    
+
+class interpolationShape:
+    
+    @staticmethod
+    def conv_point(gdf):
+        centx = geopandas.GeoDataFrame(geometry=geopandas.GeoSeries(gdf.representative_point()))
+        if centx.crs == None:
+            centx.crs = 'EPSG:4326'
+        dataFrame = geopandas.sjoin(centx, gdf, op="intersects")
+        if 'index_right' in dataFrame.columns.unique():del dataFrame['index_right']
+        return dataFrame
+    
+    @classmethod
+    def idwInterpolation(
+            cls,
+            field:geopandas.GeoDataFrame,
+            bufferLength:int,
+            attributeNames:str
+            ):
+        """
+        Inverse distance weighted (IDW) Interpolation in order to capture the full scale size of the spatial areas.
+        
+        Parameters
+        ----------
+        field : geopandas.GeoDataFrame
+            - A number of polygon geometry with its attribute data to be interpolated
+        bufferLength : int
+            - a buffer distance in meter from the whole geometry area.
+        attributeNames : str
+            - Attribute name from the geopandas GeoDataFrame that required to be interpolated
+
+        Returns
+        -------
+        soilData : geopandas.GeoDataFrame
+            - A geopandas GeoDataFrame
+
+        """
+        
+        cls._field = field
+        cls._bufferLength = bufferLength
+        cls._attributeNames = attributeNames
+        
+        soilPoint = cls.conv_point(cls._field)
+        fieldBoundsGeoms = geopandas.GeoDataFrame(
+            geometry=geopandas.GeoSeries(
+                shapely.ops.unary_union(cls._field.geometry).intersection(shapely.ops.unary_union(cls._field.geometry)))
+            ).geometry.buffer(1e-3).buffer(-1e-3)
+        fieldData = pandas.DataFrame(cls._field.drop(columns='geometry'))
+        bounds = geopandas.GeoDataFrame(
+            fieldData[:len(fieldBoundsGeoms)],
+            geometry = [i for i in fieldBoundsGeoms]
+            )
+        fieldBounds = bounds.geometry.buffer(2e-4).buffer(-2e-4)
+        convexField = fieldBounds.convex_hull.buffer(int(cls._bufferLength)/1e5)
+        bufferGeoms = geopandas.GeoDataFrame(
+            bounds,
+            crs = "EPSG:4326",
+            geometry=geopandas.GeoSeries(convexField)
+            )
+        xmax, ymin, xmin, ymax= bufferGeoms.total_bounds
+        
+        point_list = [shapely.geometry.Point((xmax, ymin)),
+                      shapely.geometry.Point((xmin, ymax)),
+                      shapely.geometry.Point((xmax, ymax)),
+                      shapely.geometry.Point((xmin, ymin))]
+        fieldPoint = geopandas.GeoDataFrame(
+            pandas.concat([bufferGeoms]*4, ignore_index = True),
+            crs = "EPSG:4326",
+            geometry = point_list
+            )
+        
+        boundSoilValue = []
+        for _, fPoints in fieldPoint.iterrows():
+            soilDistance, soilValues = 0, 0
+            for _, sPoints in soilPoint.iterrows():
+                soilValues += (float(sPoints[f"{cls._attributeNames}"])/(sPoints.geometry.distance(fPoints.geometry))*1e5)
+                soilDistance += (1/(sPoints.geometry.distance(fPoints.geometry))*1e5)
+            idwValue = (soilValues/soilDistance)
+            boundSoilValue.append(round(float(idwValue), 0))
+            soilDistance, soilValues = 0, 0
+        
+        soilIdw = geopandas.GeoDataFrame(
+            pandas.DataFrame(
+                boundSoilValue,
+                index = [i for i in range(len(boundSoilValue))],
+                columns = [f"{cls._attributeNames}"]),
+            geometry=[i for i in fieldPoint.geometry]
+            )
+        
+        soilData = pandas.concat([soilIdw, soilPoint[[f"{cls._attributeNames}", 'geometry']]], ignore_index = True)
+        soilData.set_geometry('geometry')
+        soilData["geometry"] = soilData["geometry"].apply(lambda geom: geom.wkb)
+        soilData = soilData.drop_duplicates(["geometry"])
+        soilData["geometry"] = soilData["geometry"].apply(lambda geom: shapely.wkb.loads(geom))
+        soilData.set_geometry('geometry')
+        soilData[f"{cls._attributeNames}"] = soilData[f"{cls._attributeNames}"].astype(float)
+        return soilData
+    
+    @classmethod
+    def interpolateRaster(
+            cls,
+            interpolationMethod:str,
+            dataFrame:geopandas.GeoDataFrame,
+            attributeName:str,
+            outputPath:str):
+        
+        cls._interpolationMethod = interpolationMethod
+        cls._dataArray = dataFrame
+        cls._attributeName = attributeName
+        cls._pathName = outputPath
+        path = f"{cls._pathName}_{cls._interpolationMethod}.tiff"
+        
+        if not cls._interpolationMethod in ['KNN', 'Ordinary Krigging', 'Spline','RBF']:
+            raise ValueError("Interpolation Method is not acceptable.")
+        
+        interpolatedData = interpolation(cls._dataArray, f"{cls._attributeName}")
+        if cls._interpolationMethod == 'KNN':
+            arrayData = interpolatedData.knn_2D()
+            interpolatedData.write_raster(arrayData, path)
+        elif cls._interpolationMethod == 'Ordinary Krigging':
+            arrayData = interpolatedData.OrdinaryKriging_2D()
+            interpolatedData.write_raster(arrayData, path)
+        elif cls._interpolationMethod == 'Spline':
+            arrayData = interpolatedData.Spline_2D()
+            interpolatedData.write_raster(arrayData, path)
+        elif cls._interpolationMethod == 'RBF':
+            arrayData = interpolatedData.RBF_2D()
+            interpolatedData.write_raster(arrayData, path)
+        else:
+            raise ValueError("Interpolation method is not properly defined. Only acceptable interpolation method is : 'KNN', 'Ordinary Krigging', 'Spline','RBF'")
+        return path
