@@ -15,7 +15,9 @@ ft['ids'] = range(len(ft))
 ft['Group']= ft.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
 ft.plot(cmap = 'tab20')
 ```
-![Alt text](https://github.com/abiraihan/geoshape/blob/master/images/splitCircle.png) 
+<p align="center">
+<img src="https://github.com/abiraihan/geoshape/blob/master/images/splitCircle.png" width="600">
+</p>
 
 License
 ----
