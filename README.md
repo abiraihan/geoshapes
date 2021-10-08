@@ -1,4 +1,4 @@
-# geoshape
+# geoshape (planning)
 Geospatial Experimental Design with GIS Analytics
 
 ### Install pypi library
