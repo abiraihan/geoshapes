@@ -14,7 +14,7 @@ import itertools
 import pathlib
 import exception
 import rasterio
-from scipy import interpolate
+import scipy
 from pykrige.ok import OrdinaryKriging
 from sklearn.neighbors import KNeighborsRegressor
 
@@ -1435,8 +1435,6 @@ class interpolation:
         OK = OrdinaryKriging(cls.x,cls.y,cls.z, variogram_model=variogram_model, verbose=verbose,
                      enable_plotting=False, coordinates_type=coordinates_type)
 
-        x,y = numpy.arange(0,cls.ncol), numpy.arange(0,cls.nrow)
-
         xpts = numpy.arange(cls.xmin + cls.res/2,cls.xmax+cls.res/2, cls.res)
         ypts = numpy.arange(cls.ymin + cls.res/2,cls.ymax+cls.res/2, cls.res)
         ypts = ypts[::-1]
@@ -1464,15 +1462,13 @@ class interpolation:
         # Credit from 'https://github.com/rosskush/skspatial'
         
         array = cls.points_to_grid()
-
-        x,y = numpy.arange(0,cls.ncol), numpy.arange(0,cls.nrow)
         frow, fcol = numpy.where(numpy.isfinite(array))
         X = []
         for i in range(len(frow)):
             X.append([frow[i], fcol[i]])
         z = array[frow, fcol]
 
-        sarray = interpolate.RectBivariateSpline(frow,fcol,z)
+        sarray = scipy.interpolate.RectBivariateSpline(frow,fcol,z)
 
         return sarray
     
@@ -1480,14 +1476,13 @@ class interpolation:
         array = cls.points_to_grid()
         print(array.shape)
 
-        x,y = numpy.arange(0,cls.ncol), numpy.arange(0,cls.nrow)
         frow, fcol = numpy.where(numpy.isfinite(array))
         X = []
         for i in range(len(frow)):
             X.append([frow[i], fcol[i]])
         z = array[frow, fcol]
 
-        rbfi = interpolate.Rbf(frow,fcol,z,kind='cubic')
+        rbfi = scipy.interpolate.Rbf(frow,fcol,z,kind='cubic')
         gridx, gridy = numpy.arange(0,cls.ncol), numpy.arange(0, cls.nrow)
         print(gridx)
         sarray = rbfi(gridx,gridy)
