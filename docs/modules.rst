@@ -17,7 +17,7 @@ splitLatin
 
 .. Note::
 
-    :module: geosolution.splitShape.splitLatin
+    :module: geoshapes.splitShape.splitLatin
     
     .. function:: splitLatin (geoms:shapely.geometry.Point, bufferLength:int)
        
@@ -33,31 +33,25 @@ splitLatin
     
     * *Latin Square will create 9 polygon geometry but you can select which one you want by selecting individual polygon*
 
-.. container:: 
+.. code-block:: python
+    :linenos:
 
-    .. container:: header
+     import string, shapely, geosolution, geopandas
+     point = shapely.geometry.Point(0,0)
 
-        **Code Block**
+     c = geosolution.splitShape.splitLatin(point, 25)
+     ft = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:4326')
 
-    .. code-block:: python
-        :linenos:
-    
-         import string, shapely, geosolution, geopandas
-         point = shapely.geometry.Point(0,0)
-        
-         c = geosolution.splitShape.splitLatin(point, 25)
-         ft = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:4326')
-        
-         ft['ids'] = range(len(ft))
-         ft['Group']= ft.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-         ax = ft.plot(figsize=(15, 10), alpha=0.4, edgecolor='k')
-         ft.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-         ft.apply(lambda x: ax.annotate(s=f"{x.Group}",
-                                        xy=x.geometry.centroid.coords[0],
-                                        weight='bold',
-                                        ha='center',
-                                        va='center',
-                                        size=20),axis=1)
+     ft['ids'] = range(len(ft))
+     ft['Group']= ft.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
+     ax = ft.plot(figsize=(15, 10), alpha=0.4, edgecolor='k')
+     ft.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
+     ft.apply(lambda x: ax.annotate(s=f"{x.Group}",
+                                    xy=x.geometry.centroid.coords[0],
+                                    weight='bold',
+                                    ha='center',
+                                    va='center',
+                                    size=20),axis=1)
 
     .. container:: header
 
