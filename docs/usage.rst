@@ -19,8 +19,8 @@ Required Library
 Installation
 ------------
 
-To use geosolution, first install it using pip:
+To use geoshapes, first install it using pip:
 
 .. code-block:: console
 
-   $ pip install geosolution
+   $ pip install geoshapes
