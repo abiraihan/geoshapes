@@ -28,8 +28,7 @@ checkPolygon
   dataFiles = geoshapes.checkShape.checkPolygon(path)
   
 .. container:: header
-
-        *Output*
+    *Output*
    -- Found No Issue : Performed Topology Check for the geometry
 
 
