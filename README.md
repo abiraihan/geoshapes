@@ -18,7 +18,7 @@ ft.plot(cmap = 'tab20')
 ```
 ### Split a circle geometry with defined indentifier as a treatment plot
 <p align="center">
-<img src="https://github.com/abiraihan/geoshape/blob/master/images/splitCircle.png" width="600">
+<img src="https://github.com/abiraihan/geoshapes/blob/master/images/splitCircle.png" width="600">
 </p>
 
 License
