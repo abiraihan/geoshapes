@@ -135,9 +135,9 @@ sanitizeGrid
 .. container:: header
 
         *Output Map*
-.. image:: ../images/sanitizeGrid.png
+.. image:: ../images/sanitizedGrid.png
    :scale: 100%
-   :alt: shexagonGrid Output
+   :alt: hexagonGrid Output
    :align: center
 
 ----------------------------------------------------------------------------------------------------
