@@ -10,7 +10,7 @@ pip install geoshapes
 import string, shapely, geopandas
 from geoshapes import splitShape
 pointShape = shapely.geometry.Point(0.0, 0.0)
-c = splitShape.splitCircle(pointShape, 150, 45, clipInterior = False, innerWidth = 50, getGeom = 'Both')
+c = splitShape.splitCircle(pointShape, 150, 45, clipInterior = True, innerWidth = 50, getGeom = 'Both')
 ft = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:3857')
 ft['ids'] = range(len(ft))
 ft['Group']= ft.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
