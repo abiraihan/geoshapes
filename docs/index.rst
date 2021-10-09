@@ -17,7 +17,7 @@ Welcome to geosolution's Documentation!
     :glob:
     :hidden:
 
-
+|PyPI version shields.io|
 
 Indices and tables
 ==================
