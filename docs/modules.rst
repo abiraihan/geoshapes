@@ -13,7 +13,6 @@ splitLatin
 
 :module: geoshapes.splitShape.splitLatin
 
-<<<<<<< Updated upstream
 .. function:: splitLatin(geoms:shapely.geometry.Point, bufferLength:int)
 
    :param geoms: single shapely point geometry
@@ -22,19 +21,6 @@ splitLatin
    :type bufferLength: int
    :return: collectin/list of shapely polygon geometry
    :rtype: list
-=======
-    :module: geoshapes.splitShape.splitLatin
-    
-    .. function:: splitLatin (geoms:shapely.geometry.Point, bufferLength:int)
-       
-       
-       :param geoms: single shapely point geometry
-       :type geoms: shapely.geometry.Point
-       :param bufferLength: Insert the sideLength of the square geometry regarding the CRS
-       :type bufferLength: int
-       :return: Collectin of shapely polygon geometry
-       :rtype: list
->>>>>>> Stashed changes
     
 .. tip::
     
