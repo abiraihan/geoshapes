@@ -6,8 +6,8 @@ Geospatial Experimental Design with GIS Analytics
 pip install geoshapes
 ```
 #### Example
-##### geoshapes.splitShape.splitCircle
-###### - Split a circle geometry with defined indentifier as a treatment plot
+#####        geoshapes.splitShape.splitCircle
+######         - Split a circle geometry with defined indentifier as a treatment plot
 ```python
 import string, shapely, geoshapes, geopandas
 pointLocation = shapely.geometry.Point(0,0)
@@ -44,8 +44,8 @@ _____
 <img src="https://github.com/abiraihan/geoshapes/blob/master/images/splitCircle.png" width="600">
 </p>
 
-##### geoshapes.splitShape.splitLatin
-###### - Split a square geometry with defined indentifier as a latin square treatment plot
+#####        geoshapes.splitShape.splitLatin
+######         - Split a square geometry with defined indentifier as a latin square treatment plot
 ```python
 import string, shapely, geoshapes, geopandas
 point = shapely.geometry.Point(0,0)
