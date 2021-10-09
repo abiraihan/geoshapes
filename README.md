@@ -7,10 +7,10 @@ pip install geoshapes
 ```
 #### Example
 ```python
-import string, shapely, geosolution, geopandas
+import string, shapely, geoshapes, geopandas
 point = shapely.geometry.Point(0,0)
    
-c = geosolution.splitShape.splitLatin(point, 25)
+c = geoshapes.splitShape.splitLatin(point, 25)
 ft = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:4326')
 
 ft['ids'] = range(len(ft))
