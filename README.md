@@ -9,7 +9,13 @@ mathematical modelling.
 ```python
 pip install geoshapes
 ```
-#### Example
+
+### Module Index:
+
+#### *1. <a href="./docs/modules.rst">geoshapes.splitShape</a>*
+
+
+### Example
 #####        geoshapes.splitShape.splitCircle
 ######         - Split a circle geometry with defined indentifier as a treatment plot
 ```python
@@ -87,9 +93,6 @@ _____
 <img src="https://github.com/abiraihan/geoshapes/blob/master/images/latinSquare.png" width="600">
 </p>
 
-##### Modules Details:
-
-1. <a href="./docs/modules.rst">geoshapes.splitShape</a>
 
 License
 ----
