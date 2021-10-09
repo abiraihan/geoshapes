@@ -22,7 +22,7 @@ checkPolygon
 
 .. code-block:: python
 
-  import shapely, geoshapes, geopandas
+  import geoshapes
   
   path = "./polygonShapefileData"
   dataFiles = geoshapes.checkShape.checkPolygon(path)
@@ -59,7 +59,7 @@ checkOverlaps
 
 .. code-block:: python
 
-  import shapely, geoshapes, geopandas
+  import geoshapes
   
   path = "./polygonShapefileData"
   dataFiles = geoshapes.checkShape.checkOverlaps(path)
@@ -69,5 +69,41 @@ checkOverlaps
         *Output*
     -- Please check the validity (Topology) of geometry data layer
     -- Found overlapped geometry into the data layer
+
+----------------------------------------------------------------------------------------------------
+
+checkGeometry
+-------------
+
+*To identify and check the topology of polygon data layer*
+
+:module: geoshapes.checkShape.checkGeometry
+
+.. function:: checkGeometry(fileObjects:geopandas.GeoDataFrame, geomType:str)
+
+   :param fileObjects: geopandas GeoDataFrame File Type
+   :type geomPaths: geopandas.GeoDataFrame
+   :param geomType: geometry type i.e. Point, Polygon, LineString
+   :type pathType: str
+   :return: boolean
+   :rtype: boolean
+    
+.. container:: header
+
+    **Code Block**
+
+.. code-block:: python
+
+  import geoshapes
+  
+  path = "./polygonShapefileData"
+  dataFiles = geoshapes.checkShape.checkPolygon(path)
+  isPolygon = geoshapes.checkShape.checkGeometry(dataFiles, 'Polygon')
+  print(isPolygon)
+  
+.. container:: header
+
+        *Output*
+    True
 
 ----------------------------------------------------------------------------------------------------
