@@ -34,8 +34,11 @@ gdf = geopandas.GeoDataFrame(
     crs = 'EPSG:3857'
     )
 gdf['ids'] = range(len(gdf))
-gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
+gdf['Group']= gdf.apply(
+    lambda row : string.ascii_uppercase[int(row.ids)],
+    axis = 1)
+ax = gdf.plot(figsize=(15, 10),
+alpha=0.0, edgecolor='k')
 gdf.plot(column='Group',
          ax=ax, linewidth=9,
          cmap='tab20');
