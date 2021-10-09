@@ -38,11 +38,11 @@ gdf.apply(lambda x: ax.annotate(
 ```
 
   Figure : splitsCircle
+_____
 
 <p align="center">
 <img src="https://github.com/abiraihan/geoshapes/blob/master/images/splitCircle.png" width="600">
 </p>
-______
 
 #####        geoshapes.splitShape.splitLatin
 ######         - Split a square geometry with defined indentifier as a latin square treatment plot
@@ -77,11 +77,11 @@ featureGeoms.apply(
 ```
 
   Figure : splitLatin
+_____
 
 <p align="center">
 <img src="https://github.com/abiraihan/geoshapes/blob/master/images/latinSquare.png" width="600">
 </p>
------
 
 License
 ----
