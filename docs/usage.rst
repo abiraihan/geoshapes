@@ -1,8 +1,6 @@
 Installation
 ============
 
-.. _Required Library::
-
 Required Library
 ----------------
 
@@ -10,8 +8,7 @@ Required Library
 2. geopandas
 3. pathlib
 4. pandas
-5. fiona
-6. itertools
+5. itertools
 
 
 .. _Installation::
