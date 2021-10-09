@@ -1,6 +1,3 @@
-Modules
-*******
-
 **splitShape**
 ==============
 splitShape module functionality involved in geometry splitting as creating geometry for experimetal design plot / trial design.
