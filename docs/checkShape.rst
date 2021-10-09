@@ -34,3 +34,34 @@ checkPolygon
 
 
 ----------------------------------------------------------------------------------------------------
+
+checkOverlaps
+------------
+
+*To identify and check the topology of polygon data layer*
+
+:module: geoshapes.checkShape.checkOverlaps
+
+.. function:: checkOverlaps(geomPaths:str, pathType:str, tolerance:float)
+
+   :param data: data file or directory path
+   :type data: str
+   :return: geopandas GeoDataFame
+   :rtype: geopandas.GeoDataFame
+    
+.. container:: header
+
+    **Code Block**
+
+.. code-block:: python
+
+  import shapely, geoshapes, geopandas
+  
+  path = "./polygonShapefileData"
+  dataFiles = geoshapes.checkShape.checkOverlaps(path)
+  
+.. container:: header
+
+        *Output*
+    -- Please check the validity (Topology) of geometry data layer.
+    -- Found overlapped geometry into the data layer.
