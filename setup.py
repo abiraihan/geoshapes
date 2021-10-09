@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
   name = 'geoshapes',         # How you named your package folder (MyLib)
   packages = ['geoshapes'],   # Chose the same as "name"
-  version = '0.0.3',      # Start with a small number and increase it with every change you make
+  version = '0.0.1',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'A basic geospatial geoprocessing library on experimental design',   # Give a short description about your library
   author = 'Abir Raihan',                   # Type in your name
   author_email = 'abirraihan.urp@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/abiraihan/geoshapes',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/abiraihan/geoshapes/archive/refs/tags/geoshapeV0.0.1-alphaPlanning.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/abiraihan/geoshapes/archive/refs/tags/geoshapesv0.0.3.tar.gz',    # I explain this later on
   keywords = ['experimental design', 'spatial analysis', 'interpolation'],   # Keywords that define your package best
   install_requires=[
       'os',
