@@ -12,7 +12,6 @@ import shapely
 import geopandas
 import itertools
 import pathlib
-from geoshapes import exception
 
 class splitShape:
     
@@ -771,7 +770,7 @@ class gridShape:
             bnds = gdf.to_crs('EPSG:3857').geometry.buffer(cls._size).bounds
             
         else:
-            raise exception.InputError(type(cls._bounds), "Shape geometry")
+            raise TypeError("Data types other than a shapefile path or Geopandas GeoDataFrame")
         
         x = numpy.linspace(bnds.minx[0], bnds.maxx[0], int(abs((bnds.minx[0]-bnds.maxx[0])/cls._size)))
         y = numpy.linspace(bnds.miny[0], bnds.maxy[0], int(abs((bnds.miny[0]-bnds.maxy[0])/cls._size)))
@@ -951,7 +950,7 @@ class mergeShape:
 
         Raises
         ------
-        exception
+        TypeError
             - If data is not a list of geometry / A geopandas GeoDataFrame
 
         Returns
@@ -971,8 +970,7 @@ class mergeShape:
             allPoly = cls._geomData
             allPolyAreas = shapely.ops.unary_union([i for i in cls._geomData.geometry]).area
         else:
-            raise exception.InputError(type(cls._geomData), "Expecting a list of geometry \
-                                       collection or geopandas GeoDataFrame.")
+            raise TypeError("Data types other than a list of geometry or Geopandas GeoDataFrame")
         
         equalArea = allPolyAreas/int(cls._mergedPoly)
         geoms , geom_area = [], 0
@@ -1020,7 +1018,7 @@ class mergeShape:
 
         Raises
         ------
-        exception
+        TypeError
             - If data is not a list of geometry / A geopandas GeoDataFrame
 
         Returns
@@ -1038,8 +1036,7 @@ class mergeShape:
         elif isinstance(cls._geomData, geopandas.GeoDataFrame):
             listPoly = [i for i in cls._geomData.geometry]
         else:
-            raise exception.InputError(type(cls._geomsData), "Expecting a list of geometry \
-                                       collection or geopandas GeoDataFrame.")
+            raise TypeError("Data is not a list of geometry / A geopandas GeoDataFrame")
         
         areas = min(sorted([i.area for i in listPoly])[-cls._splitGeoms:])
         
@@ -1169,7 +1166,7 @@ class selectGeom:
 
         Raises
         ------
-        shapeError
+        AttributeError
             - If Accepted keyword ['Square', 'Rectangle', 'Square-Rectangle'] is not mentioned.
 
         Returns
@@ -1197,7 +1194,7 @@ class selectGeom:
         elif cls.shape == 'Square-Rectangle':
             return len_data.iloc[len_data['ratio'].argsort()[int((len_data['ratio'].max())/2):int((len_data['ratio'].max())/2)+cls.sample]], len_data.iloc[~len_data['ratio'].argsort()[int((len_data['ratio'].max())/2):int((len_data['ratio'].max())/2)+cls.sample]]
         else:
-            raise exception.ShapeError(cls.shape)
+            raise AttributeError("Not accepted, only acceptable item are 'Rectangle, Square, Square-Rectangle'")
     
     @classmethod
     def getInteriorGeoms(
@@ -1215,8 +1212,8 @@ class selectGeom:
 
         Raises
         ------
-        exception
-            - InputError, if data other than GeoDataFrame or list of shapely geometry.
+        TypeError
+            - if data other than GeoDataFrame or list of shapely geometry.
 
         Returns
         -------
@@ -1237,8 +1234,7 @@ class selectGeom:
         elif isinstance(cls._geomData, list):
             data = cls._geomData
         else:
-            raise exception.InputError(type(cls._geomsData), "Expecting a list of geometry \
-                                       collection or geopandas GeoDataFrame.")
+            raise TypeError("Expecting a list of geometry collection or geopandas GeoDataFrame.")
         
         bounds = shapely.ops.unary_union(data).buffer(3.048e-6).buffer(-float(intBuffer))
         
@@ -1275,8 +1271,8 @@ class utils:
 
         Raises
         ------
-        exception
-            - InputError, if data other than GeoDataFrame or list of shapely geometry.
+        TypeError
+            - If data other than GeoDataFrame or list of shapely geometry.
 
         Returns
         -------
@@ -1292,8 +1288,7 @@ class utils:
         elif isinstance(cls._geomsData, geopandas.GeoDataFrame):
             data = [i for i in cls._geomsData.geometry]
         else:
-            raise exception.InputError(type(cls._geomsData), "Expecting a list of geometry \
-                                       collection or geopandas GeoDataFrame.")
+            raise TypeError("Expecting a list of geometry \ collection or geopandas GeoDataFrame.")
         return [items for sublist in [list(i)
                                       for i in data
                                       if i.geom_type == 'MultiPolygon']

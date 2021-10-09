@@ -4,4 +4,3 @@ from geoshapes.geoshapes import splitShape
 from geoshapes.geoshapes import checkShape
 from geoshapes.geoshapes import mergeShape
 from geoshapes.geoshapes import selectGeom
-from geoshapes.exception import InputError, RangeError, ShapeError
