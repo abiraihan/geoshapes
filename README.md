@@ -1,33 +1,44 @@
 # geoshapes
 Geospatial Experimental Design with GIS Analytics
 
-### Install pypi library
+### Install library
 ```python
 pip install geoshapes
 ```
 #### Example
+##### - Split a circle geometry with defined indentifier as a treatment plot
 ```python
- 1  import string, shapely, geoshapes, geopandas
- 2  pointLocation = shapely.geometry.Point(0,0)
- 3  polygonList = geoshapes.splitShape.splitCircle(geoms = pointLocation,
- 4                                                   circleRadius = 500,
- 5                                                   incrementdegree = 45,
- 6                                                   clipInterior = True,
- 7                                                   innerWidth = 100,
- 8                                                   getGeom = 'Both'
- 9                                                   )
-10  gdf = geopandas.GeoDataFrame(geometry = polygonList, crs = 'EPSG:3857')
-11  gdf['ids'] = range(len(gdf))
-12  gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-13  ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
-14  gdf.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-15  gdf.apply(lambda x: ax.annotate(s=f"Group : {x.Group}{x.ids}",
-16                                  xy=x.geometry.centroid.coords[0],
-17                                  weight='bold', ha='center',
-18                                  va='center', size=10),axis=1
-19                                  )
+import string, shapely, geoshapes, geopandas
+pointLocation = shapely.geometry.Point(0,0)
+polygonList = geoshapes.splitShape.splitCircle(
+    geoms = pointLocation,
+    circleRadius = 500,
+    incrementDegree = 45,
+    clipInterior = True,
+    innerWidth = 100,
+    getGeom = 'Both'
+    )
+gdf = geopandas.GeoDataFrame(
+    geometry = polygonList,
+    crs = 'EPSG:3857'
+    )
+gdf['ids'] = range(len(gdf))
+gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
+ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
+gdf.plot(column='Group',
+         ax=ax, linewidth=9,
+         cmap='tab20');
+gdf.apply(lambda x: ax.annotate(
+    s=f"Group : {x.Group}{x.ids}",
+    xy=x.geometry.centroid.coords[0],
+    weight='bold', ha='center',
+    va='center', size=10),axis=1
+    )
 ```
-### Split a circle geometry with defined indentifier as a treatment plot
+
+splitsCircle
+____________
+
 <p align="center">
 <img src="https://github.com/abiraihan/geoshapes/blob/master/images/splitCircle.png" width="600">
 </p>
