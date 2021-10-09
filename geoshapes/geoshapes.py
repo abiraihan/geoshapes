@@ -735,7 +735,7 @@ class gridShape:
             
         Raises
         ------
-        InputError
+        TypeError
             DESCRIPTION.
             If datatypes other than a shapefile path or Geopandas GeoDataFrame
             
