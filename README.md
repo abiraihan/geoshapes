@@ -3,11 +3,12 @@ Geospatial Experimental Design with GIS Analytics
 
 ### Install pypi library
 ```python
-pip install geoshape
+pip install geoshapes
 ```
 #### Example
 ```python
-import string, shapely, geoshape, geopandas
+import string, shapely, geopandas
+from geoshapes import splitShape
 pointShape = shapely.geometry.Point(0.0, 0.0)
 c = splitShape.splitCircle(pointShape, 150, 45, clipInterior = False, innerWidth = 50, getGeom = 'Both')
 ft = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:3857')
