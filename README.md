@@ -14,6 +14,7 @@ pip install geoshapes
 
 #### *1. <a href="./docs/splitShape.rst">geoshapes.splitShape</a>*
 #### *2. <a href="./docs/checkShape.rst">geoshapes.checkShape</a>*
+#### *3. <a href="./docs/gridShape.rst">geoshapes.gridShape</a>*
 
 
 ### Example
