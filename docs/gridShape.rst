@@ -32,8 +32,8 @@ squareGrid
   bounds = fileData.geometry[0]
   dr = geopandas.GeoDataFrame(crs = 'EPSG:3857', geometry = [bounds])
   dr = dr.to_crs('EPSG:4326')
-  fr = geoshapes.gridShape.squareGrid(dr, 10, cut = True)
-  fr.plot(
+  square = geoshapes.gridShape.squareGrid(dr, 10, cut = True)
+  square.plot(
         figsize=(8, 7),
         alpha=0.3,
         edgecolor='k'
@@ -79,8 +79,8 @@ hexagonGrid
   bounds = fileData.geometry[0]
   dr = geopandas.GeoDataFrame(crs = 'EPSG:3857', geometry = [bounds])
   dr = dr.to_crs('EPSG:4326')
-  fr = geoshapes.gridShape.hexagonGridGrid(dr, 5, cut = True)
-  fr.plot(
+  hexagon = geoshapes.gridShape.hexagonGridGrid(dr, 5, cut = True)
+  hexagon.plot(
         figsize=(8, 7),
         alpha=0.3,
         edgecolor='k'
