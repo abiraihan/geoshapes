@@ -33,7 +33,11 @@ squareGrid
   dr = geopandas.GeoDataFrame(crs = 'EPSG:3857', geometry = [bounds])
   dr = dr.to_crs('EPSG:4326')
   fr = geoshapes.gridShape.squareGrid(dr, 10, cut = True)
-  fr.plot(linewidth = 1, edgecolor = 'k')
+    fr.plot(
+        figsize=(8, 7),
+        alpha=0.3,
+        edgecolor='k'
+        )
   
 .. container:: header
 
