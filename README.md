@@ -87,6 +87,10 @@ _____
 <img src="https://github.com/abiraihan/geoshapes/blob/master/images/latinSquare.png" width="600">
 </p>
 
+##### Modules Details:
+
+1. <a href="./docs/modules.rst">geoshapes.splitShape</a>
+
 License
 ----
 MIT
