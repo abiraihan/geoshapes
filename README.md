@@ -1,5 +1,9 @@
 # geoshapes
-Geospatial Experimental Design with GIS Analytics
+Geospatial Experimental Design with GIS Analytics.
+To split Polygon geometry into different shape that required to create
+experimental plot / Trial design. It creates/re-creates experimental
+plot design to summerize data to geospatially enabled space for next-step
+mathematical modelling.
 
 ### Install library
 ```python
