@@ -63,5 +63,5 @@ checkOverlaps
 .. container:: header
 
         *Output*
-    -- Please check the validity (Topology) of geometry data layer.
-    -- Found overlapped geometry into the data layer.
+    -- Please check the validity (Topology) of geometry data layer
+    -- Found overlapped geometry into the data layer
