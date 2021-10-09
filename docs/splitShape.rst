@@ -27,21 +27,39 @@ splitLatin
 
 .. code-block:: python
 
-  import string, shapely, geoshapes, geopandas
-  
-  point = shapely.geometry.Point(0,0)
-  c = geoshapes.splitShape.splitLatin(point, 25)
-  ft = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:4326')
-  ft['ids'] = range(len(ft))
-  ft['Group']= ft.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-  ax = ft.plot(figsize=(15, 10), alpha=0.4, edgecolor='k')
-  ft.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-  ft.apply(lambda x: ax.annotate(s=f"{x.Group}",
-                                 xy=x.geometry.centroid.coords[0],
-                                 weight='bold',
-                                 ha='center',
-                                 va='center',
-                                 size=20),axis=1)
+    import string, shapely, geoshapes, geopandas
+    
+    point = shapely.geometry.Point(0,0)
+    c = geoshapes.splitShape.splitLatin(point, 25)
+    ft = geopandas.GeoDataFrame(
+        geometry = c,
+        crs = 'EPSG:4326'
+        )
+    
+    ft['ids'] = range(len(ft))
+    ft['Group']= ft.apply(
+        lambda row : string.ascii_uppercase[int(row.ids)],
+        axis = 1
+        )
+    
+    ax = ft.plot(
+        figsize=(15, 10),
+        alpha=0.4,
+        edgecolor='k'
+        )
+    ft.plot(
+            column='Group',
+            ax=ax, linewidth=9,
+            cmap='tab20'
+            );
+    ft.apply(lambda x: ax.annotate(
+        s=f"{x.Group}",
+        xy=x.geometry.centroid.coords[0],
+        weight='bold',
+        ha='center',
+        va='center',
+        size=20),
+        axis=1)
 
 .. container:: header
 
@@ -86,20 +104,42 @@ splitGeom
 .. code-block:: python
 
     import string, shapely, geoshapes, geopandas
+    
     sdf = geopandas.read_file("./filePoly.shp")
     fl = shapely.geometry.box(*sdf.geometry[3].bounds).intersection(sdf.geometry[3])
-    c = geoshapes.splitShape.splitGeom(geoms = fl, splits = 25, rotation = 30)
-
-    gdf = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:3857')
+    c = geoshapes.splitShape.splitGeom(
+        geoms = fl,
+        splits = 25,
+        rotation = 30
+        )
+    
+    gdf = geopandas.GeoDataFrame(
+        geometry = c,
+        crs = 'EPSG:3857'
+        )
     gdf['ids'] = range(len(gdf))
-    gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-    ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
-    gdf.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-
-    gdf.apply(lambda x: ax.annotate(s=f"{x.Group}",
-                                    xy=x.geometry.centroid.coords[0],
-                                    weight='bold', ha='center',
-                                    va='center', size=10),axis=1)
+    gdf['Group']= gdf.apply(
+        lambda row : string.ascii_uppercase[int(row.ids)],
+        axis = 1
+        )
+    
+    ax = gdf.plot(
+        figsize=(15, 10),
+        alpha=0.0,
+        edgecolor='k'
+        )
+    gdf.plot(
+        column='Group',
+        ax=ax,
+        linewidth=9,
+        cmap='tab20');
+    
+    gdf.apply(
+        lambda x: ax.annotate(
+            s=f"{x.Group}",
+            xy=x.geometry.centroid.coords[0],
+            weight='bold', ha='center',
+            va='center', size=10),axis=1)
     
 
 .. container:: header
@@ -149,23 +189,42 @@ splitCircle
 
     import string, shapely, geoshapes, geopandas
     pointLocation = shapely.geometry.Point(0,0)
-    polygonList = geoshapes.splitShape.splitCircle(geoms = pointLocation,
-                                                   circleRadius = 500,
-                                                   incrementDegree = 45,
-                                                   clipInterior = True,
-                                                   innerWidth = 100,
-                                                   getGeom = 'Both'
-                                                   )
-    gdf = geopandas.GeoDataFrame(geometry = polygonList, crs = 'EPSG:3857')
+    polygonList = geoshapes.splitShape.splitCircle(
+        geoms = pointLocation,
+        circleRadius = 500,
+        incrementDegree = 45,
+        clipInterior = True,
+        innerWidth = 100,
+        getGeom = 'Both'
+        )
+    gdf = geopandas.GeoDataFrame(
+        geometry = polygonList,
+        crs = 'EPSG:3857'
+        )
     gdf['ids'] = range(len(gdf))
-    gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-    ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
-    gdf.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-    gdf.apply(lambda x: ax.annotate(s=f"Group : {x.Group}{x.ids}",
-                                    xy=x.geometry.centroid.coords[0],
-                                    weight='bold', ha='center',
-                                    va='center', size=10),axis=1
-                                    )
+    
+    gdf['Group']= gdf.apply(
+        lambda row : string.ascii_uppercase[int(row.ids)],
+        axis = 1
+        )
+    ax = gdf.plot(
+        figsize=(15, 10),
+        alpha=0.0,
+        edgecolor='k'
+        )
+    gdf.plot(
+        column='Group',
+        ax=ax, linewidth=9,
+        cmap='tab20'
+        );
+    gdf.apply(
+        lambda x: ax.annotate(
+            s=f"Group : {x.Group}{x.ids}",
+            xy=x.geometry.centroid.coords[0],
+            weight='bold', ha='center',
+            va='center', size=10),
+        axis=1
+        )
 
 .. container:: header
 
@@ -205,19 +264,38 @@ splitCircleSquare
 
     import string, shapely, geoshapes, geopandas
     pointLocation = shapely.geometry.Point(0,0)
-    polygonList = geoshapes.splitShape.splitCircleSquare(geoms = pointLocation,
-                                                         circleRadius = 500,
-                                                         rotation = 45,
-                                                         )
-    gdf = geopandas.GeoDataFrame(geometry = polygonList, crs = 'EPSG:3857')
+    polygonList = geoshapes.splitShape.splitCircleSquare(
+        geoms = pointLocation,
+        circleRadius = 500,
+        rotation = 45,
+        )
+    gdf = geopandas.GeoDataFrame(
+        geometry = polygonList,
+        crs = 'EPSG:3857'
+        )
     gdf['ids'] = range(len(gdf))
-    gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-    ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
-    gdf.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-    gdf.apply(lambda x: ax.annotate(s=f"Group : {x.Group}{x.ids}",
-                                    xy=x.geometry.centroid.coords[0],
-                                    weight='bold', ha='center',
-                                    va='center', size=10),axis=1)
+    gdf['Group']= gdf.apply(
+        lambda row : string.ascii_uppercase[int(row.ids)],
+        axis = 1
+        )
+    ax = gdf.plot(
+        figsize=(15, 10),
+        alpha=0.0,
+        edgecolor='k'
+        )
+    gdf.plot(
+        column='Group',
+        ax=ax, linewidth=9,
+        cmap='tab20'
+        );
+    gdf.apply(
+        lambda x: ax.annotate(
+            s=f"Group : {x.Group}{x.ids}",
+            xy=x.geometry.centroid.coords[0],
+            weight='bold', ha='center',
+            va='center', size=10),
+        axis=1
+        )
 
 
 .. container:: header
@@ -263,20 +341,39 @@ splitSquare
     
     import string, shapely, geoshapes, geopandas
     pointLocation = shapely.geometry.Point(0,0)
-    polygonList = geoshapes.splitShape.splitSquare(geoms = pointLocation,
-                                                   sideLength = 50,
-                                                   rotation = 45,
-                                                   includeInterior = True
-                                                   )
-    gdf = geopandas.GeoDataFrame(geometry = polygonList, crs = 'EPSG:3857')
+    polygonList = geoshapes.splitShape.splitSquare(
+        geoms = pointLocation,
+        sideLength = 50,
+        rotation = 45,
+        includeInterior = True
+        )
+    gdf = geopandas.GeoDataFrame(
+        geometry = polygonList,
+        crs = 'EPSG:3857'
+        )
     gdf['ids'] = range(len(gdf))
-    gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-    ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
-    gdf.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-    gdf.apply(lambda x: ax.annotate(s=f"Group : {x.Group}{x.ids}",
-                                    xy=x.geometry.centroid.coords[0],
-                                    weight='bold', ha='center',
-                                    va='center', size=10),axis=1)
+    gdf['Group']= gdf.apply(
+        lambda row : string.ascii_uppercase[int(row.ids)],
+        axis = 1
+        )
+    ax = gdf.plot(
+        figsize=(15, 10),
+        alpha=0.0,
+        edgecolor='k'
+        )
+    gdf.plot(
+        column='Group',
+        ax=ax, linewidth=9,
+        cmap='tab20'
+        );
+    gdf.apply(
+        lambda x: ax.annotate(
+            s=f"Group : {x.Group}{x.ids}",
+            xy=x.geometry.centroid.coords[0],
+            weight='bold', ha='center',
+            va='center', size=10),
+        axis=1
+        )
 
 .. container:: header
 
