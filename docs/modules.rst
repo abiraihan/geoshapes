@@ -3,71 +3,60 @@ Modules
 
 **splitShape**
 ==============
+splitShape module functionality involved in geometry splitting as creating geometry for experimetal design plot / trial design.
 
-.. tip::
-    
-    splitShape module functionality involved in geometry splitting as creating geometry for experimetal design plot / trial design.
-
-.. _splitLatin::
 
 splitLatin
 -----------
 
 *Create a Latin Square experimental design with equal size as a polygon*
 
-.. Note::
+:module: geoshapes.splitShape.splitLatin
 
-    :module: geoshapes.splitShape.splitLatin
-    
-    .. function:: splitLatin (geoms:shapely.geometry.Point, bufferLength:int)
-       
-       
-       :param geoms: single shapely point geometry
-       :type geoms: shapely.geometry.Point
-       :param bufferLength: Insert the sideLength of the square geometry regarding the CRS
-       :type bufferLength: int
-       :return: Collectin of shapely polygon geometry
-       :rtype: list
+.. function:: splitLatin(geoms:shapely.geometry.Point, bufferLength:int)
+
+   :param geoms: single shapely point geometry
+   :type geoms: shapely.geometry.Point
+   :param bufferLength: Insert the sideLength of the square geometry regarding the CRS
+   :type bufferLength: int
+   :return: collectin/list of shapely polygon geometry
+   :rtype: list
     
 .. tip::
     
     * *Latin Square will create 9 polygon geometry but you can select which one you want by selecting individual polygon*
+.. container:: header
+
+    **Code Block**
 
 .. code-block:: python
-    :linenos:
 
-     import string, shapely, geosolution, geopandas
-     point = shapely.geometry.Point(0,0)
+  import string, shapely, geoshapes, geopandas
+  
+  point = shapely.geometry.Point(0,0)
+  c = geoshapes.splitShape.splitLatin(point, 25)
+  ft = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:4326')
+  ft['ids'] = range(len(ft))
+  ft['Group']= ft.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
+  ax = ft.plot(figsize=(15, 10), alpha=0.4, edgecolor='k')
+  ft.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
+  ft.apply(lambda x: ax.annotate(s=f"{x.Group}",
+                                 xy=x.geometry.centroid.coords[0],
+                                 weight='bold',
+                                 ha='center',
+                                 va='center',
+                                 size=20),axis=1)
 
-     c = geosolution.splitShape.splitLatin(point, 25)
-     ft = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:4326')
-
-     ft['ids'] = range(len(ft))
-     ft['Group']= ft.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-     ax = ft.plot(figsize=(15, 10), alpha=0.4, edgecolor='k')
-     ft.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-     ft.apply(lambda x: ax.annotate(s=f"{x.Group}",
-                                    xy=x.geometry.centroid.coords[0],
-                                    weight='bold',
-                                    ha='center',
-                                    va='center',
-                                    size=20),axis=1)
-
-    .. container:: header
+.. container:: header
 
         *Output Map*
-        
-    .. image:: latinSquare.png
-       :width: 600px
-       :height: 600px
-       :scale: 80 %
-       :alt: Split Circle Output
-       :align: center
+.. image:: ../images/latinSquare.png
+   :scale: 80 %
+   :alt: Split Circle Output
+   :align: center
 
 
 ----------------------------------------------------------------------------------------------------
-
-.. _splitGeom::
 
 splitGeom
 ---------
@@ -76,60 +65,54 @@ splitGeom
 
 .. note::
 
-    :module: geosolution.splitShape.splitGeom
-        
-    .. function:: splitGeom (geoms:shapely.geometry.Polygon, splits:int, **kwargs:dict)
-       
-       :param geoms: Single shapely Polygon geometry
-       :type geoms: shapely.geometry.polygon
-       :param splits: Number of splits required
-       :type splits: int
-       :param rotation: Rotation angle in degree, insert the degree that required, Default is 30
-       :type rotation: int, optional
-       :return: List of shapely polygon or multi-polygon geometry
-       :rtype: list
+:module: geoshapes.splitShape.splitGeom
+
+.. function:: splitGeom (geoms:shapely.geometry.Polygon, splits:int, **kwargs:dict)
+
+   :param geoms: Single shapely Polygon geometry
+   :type geoms: shapely.geometry.polygon
+   :param splits: Number of splits required
+   :type splits: int
+   :param rotation: Rotation angle in degree, insert the degree that required, Default is 30
+   :type rotation: int, optional
+   :return: List of shapely polygon or multi-polygon geometry
+   :rtype: list
 
 .. caution::
     
     * *Try to assign the rotation degree less than 120 because, it will increase the processing time to calculate the best possible fit to findout the major axis for the polygon, if it increased.*
     * *Number of splits is always more than the splits number assigned, if found multi-polygon while it splits geometry. As 25 assigned into the code example for the splits parameter but it returned 26 piece of geometry.*
 
-.. container:: 
+.. container:: header
 
-    .. container:: header
+    **Code Block**
 
-        **Code Block**
-    
-    .. code-block:: python
-       :linenos:
-    
-        import string, shapely, geosolution, geopandas
-        sdf = geopandas.read_file("./filePoly.shp")
-        fl = shapely.geometry.box(*sdf.geometry[3].bounds).intersection(sdf.geometry[3])
-        c = geosolution.splitShape.splitGeom(geoms = fl, splits = 25, rotation = 30)
+.. code-block:: python
 
-        gdf = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:3857')
-        gdf['ids'] = range(len(gdf))
-        gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-        ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
-        gdf.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-        
-        gdf.apply(lambda x: ax.annotate(s=f"{x.Group}",
-                                        xy=x.geometry.centroid.coords[0],
-                                        weight='bold', ha='center',
-                                        va='center', size=10),axis=1)
+    import string, shapely, geoshapes, geopandas
+    sdf = geopandas.read_file("./filePoly.shp")
+    fl = shapely.geometry.box(*sdf.geometry[3].bounds).intersection(sdf.geometry[3])
+    c = geoshapes.splitShape.splitGeom(geoms = fl, splits = 25, rotation = 30)
+
+    gdf = geopandas.GeoDataFrame(geometry = c, crs = 'EPSG:3857')
+    gdf['ids'] = range(len(gdf))
+    gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
+    ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
+    gdf.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
+
+    gdf.apply(lambda x: ax.annotate(s=f"{x.Group}",
+                                    xy=x.geometry.centroid.coords[0],
+                                    weight='bold', ha='center',
+                                    va='center', size=10),axis=1)
     
 
-    .. container:: header
+.. container:: header
 
         *Output Map*
-        
-    .. image:: splitGeom.png
-       :width: 1300px
-       :height: 600px
-       :scale: 70 %
-       :alt: Split Circle Output
-       :align: center
+.. image:: ../images/splitGeom.png
+   :scale: 80 %
+   :alt: Split Circle Output
+   :align: center
 
 
 ----------------------------------------------------------------------------------------------------
