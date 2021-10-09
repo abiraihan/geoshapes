@@ -37,7 +37,7 @@ gdf.apply(lambda x: ax.annotate(
     )
 ```
 
-  Figure : Output - splitsCircle
+  Figure : splitsCircle
 _____
 
 <p align="center">
@@ -76,7 +76,7 @@ featureGeoms.apply(
     )
 ```
 
-  Figure : Output - splitsCircle
+  Figure : splitLatin
 _____
 
 <p align="center">
