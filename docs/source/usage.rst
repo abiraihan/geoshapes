@@ -23,4 +23,4 @@ To use geosolution, first install it using pip:
 
 .. code-block:: console
 
-   $ pip install geosolution
+   $ pip install geoshapes
