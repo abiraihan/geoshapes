@@ -151,7 +151,7 @@ splitCircle
     pointLocation = shapely.geometry.Point(0,0)
     polygonList = geoshapes.splitShape.splitCircle(geoms = pointLocation,
                                                    circleRadius = 500,
-                                                   incrementdegree = 45,
+                                                   incrementDegree = 45,
                                                    clipInterior = True,
                                                    innerWidth = 100,
                                                    getGeom = 'Both'
