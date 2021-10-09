@@ -8,7 +8,7 @@ setup(
   author = 'Abir Raihan',                   # Type in your name
   author_email = 'abirraihan.urp@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/abiraihan/geoshapes',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/abiraihan/geoshape/archive/refs/tags/geoshapeV0.0.1-alphaPlanning.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/abiraihan/geoshapes/archive/refs/tags/geoshapeV0.0.1-alphaPlanning.tar.gz',    # I explain this later on
   keywords = ['experimental design', 'spatial analysis', 'interpolation'],   # Keywords that define your package best
   install_requires=[
       'math',
