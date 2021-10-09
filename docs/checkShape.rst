@@ -44,8 +44,12 @@ checkOverlaps
 
 .. function:: checkOverlaps(geomPaths:str, pathType:str, tolerance:float)
 
-   :param data: data file or directory path
-   :type data: str
+   :param geomPaths: shapefile or directory path
+   :type geomPaths: str
+   :param pathType: default 'directoryPath'
+   :type pathType: str
+   :param tolerance: default is 0.005
+   :type tolerance: float, optional
    :return: geopandas GeoDataFame
    :rtype: geopandas.GeoDataFame
     
