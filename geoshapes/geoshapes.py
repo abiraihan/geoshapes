@@ -569,7 +569,7 @@ class checkShape:
     @classmethod
     def checkOverlaps(
             cls,
-            geomPaths,
+            geomPaths:str,
             pathType:str = 'directoryPath',
             tolerance:float = 0.005
             ):

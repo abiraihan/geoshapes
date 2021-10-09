@@ -13,6 +13,7 @@ pip install geoshapes
 ### Module Index:
 
 #### *1. <a href="./docs/splitShape.rst">geoshapes.splitShape</a>*
+#### *2. <a href="./docs/splitShape.rst">geoshapes.checkShape</a>*
 
 
 ### Example
