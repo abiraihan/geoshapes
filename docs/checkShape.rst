@@ -30,7 +30,6 @@ checkPolygon
 .. container:: header
 
         *Output*
-.. note::
    -- Found No Issue : Performed Topology Check for the geometry
 
 
