@@ -56,10 +56,10 @@ hexagonGrid
 
 :module: geoshapes.gridShape.hexagonGrid
 
-.. function:: squareGrid(gdf, length:int, cut:bool = False)
+.. function:: hexagonGrid(gdf, length:int, cut:bool = False)
 
    :param gdf: geopandas GeoDataFrame type
-   :type gdf: str / geopandas.GeoDataFrame
+   :type gdf: geopandas.GeoDataFrame
    :param spacing: length of the side of a hexagon grid in meters
    :type spacing: int
    :param cut: intersects hexagon grid polygon with boundary area
@@ -90,6 +90,52 @@ hexagonGrid
 
         *Output Map*
 .. image:: ../images/hexagonGrid.png
+   :scale: 100%
+   :alt: shexagonGrid Output
+   :align: center
+
+----------------------------------------------------------------------------------------------------
+
+sanitizeGrid
+------------
+
+*Sanitize a polygon geometry for shrink/seperate the geometry*
+
+:module: geoshapes.gridShape.sanitizeGrid
+
+.. function:: sanitizeGrid(gdf, tolerance:int = 11)
+
+   :param gdf: geopandas GeoDataFrame type
+   :type gdf: geopandas.GeoDataFrame
+   :param tolerance: Tolerance value can not be less than 11 (1.1 centimeter)
+   :type tolerance: int
+   :return: Sanitized grid of the boundary
+   :rtype: geopandas.GeoDataFame
+    
+.. container:: header
+
+    **Code Block**
+
+.. code-block:: python
+
+  import geoshapes, gropandas
+  
+  fileData = geopandas.read_file("./polygonShapefileData.shp")
+  bounds = fileData.geometry[0]
+  dr = geopandas.GeoDataFrame(crs = 'EPSG:3857', geometry = [bounds])
+  dr = dr.to_crs('EPSG:4326')
+  hexagon = geoshapes.gridShape.hexagonGridGrid(dr, 5, cut = True)
+  sanitizedGrid = geoshapes.gridShape.sanitizeGrid(fr, 3500) #35 meter seperability
+  sanitizedGrid.plot(
+        figsize=(8, 7),
+        alpha=0.3,
+        edgecolor='k'
+        )
+  
+.. container:: header
+
+        *Output Map*
+.. image:: ../images/sanitizeGrid.png
    :scale: 100%
    :alt: shexagonGrid Output
    :align: center
