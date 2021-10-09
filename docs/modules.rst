@@ -52,7 +52,7 @@ splitLatin
         *Output Map*
 .. image:: ../images/latinSquare.png
    :scale: 80 %
-   :alt: Split Circle Output
+   :alt: Split latin Square Output
    :align: center
 
 
@@ -111,110 +111,94 @@ splitGeom
         *Output Map*
 .. image:: ../images/splitGeom.png
    :scale: 80 %
-   :alt: Split Circle Output
+   :alt: Split Geometry Output
    :align: center
 
 
 ----------------------------------------------------------------------------------------------------
-
-
-.. _splitCircle:: Split Circle
 
 splitCircle
 -----------
 
 *To get splited polgon for circular area. i.e. Experimental Design*
 
-.. note::
-
-    :module: geosolution.splitShape.splitCircle
-        
-    .. function:: splitCircle (geoms:shapely.geometry.Point, circleRadius:float, incrementDegree:int, **kwargs:dict)
-       
-       :param geoms: Single shapely Point geometry
-       :type geoms: shapely.geometry.point
-       :param circleRadius: Buffer length in feet 
-       :type circleRadius: float
-       :param incrementDegree: degree increament step-wise (1 - 160)
-       :type incrementDegree: int
-       :param clipInterior: Default is False. if True, returns intersected geomerty
-       :type clipInterior: bool, optional
-       :param innerWidth: Assign the number in feet that it should be intersected from the Centroid for whole geometry, default is 1.
-       :type innerWidth: int, optional
-       :param getGeom: Default is 'Both', Three specific option as 'Inner', 'Outer' and 'Both', returns the specific one as assigned
-       :type getGeom: int, optional
-       :return: Returns a collection of shapely polygon geometry
-       :rtype: list
+:module: geoshapes.splitShape.splitCircle
+    
+.. function:: splitCircle (geoms:shapely.geometry.Point, circleRadius:float, incrementDegree:int, **kwargs:dict)
+   
+   :param geoms: Single shapely Point geometry
+   :type geoms: shapely.geometry.point
+   :param circleRadius: Buffer length in feet 
+   :type circleRadius: float
+   :param incrementDegree: degree increament step-wise (1 - 160)
+   :type incrementDegree: int
+   :param clipInterior: Default is False. if True, returns intersected geomerty
+   :type clipInterior: bool, optional
+   :param innerWidth: Assign the number in feet that it should be intersected from the Centroid for whole geometry, default is 1.
+   :type innerWidth: int, optional
+   :param getGeom: Default is 'Both', Three specific option as 'Inner', 'Outer' and 'Both', returns the specific one as assigned
+   :type getGeom: int, optional
+   :return: Returns a collection of shapely polygon geometry
+   :rtype: list
 
 .. caution::
     
     * *Try to assign the incrementDegree less than 160 because, it won't intersect the circular area symetrically , if it increased.*
 
-.. container:: 
+.. container:: header
 
-    .. container:: header
+    **Code Block**
 
-        **Code Block**
+.. code-block:: python
 
-    .. code-block:: python
-        :linenos:
-    
-         import string, shapely, geosolution, geopandas
-         pointLocation = shapely.geometry.Point(0,0)
-         polygonList = geosolution.splitShape.splitCircle(geoms = pointLocation,
-                                                          circleRadius = 500,
-                                                          incrementdegree = 45,
-                                                          clipInterior = True,
-                                                          innerWidth = 100,
-                                                          getGeom = 'Both'
-                                                          )
-         gdf = geopandas.GeoDataFrame(geometry = polygonList, crs = 'EPSG:3857')
-         gdf['ids'] = range(len(gdf))
-         gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
-         ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
-         gdf.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
-         gdf.apply(lambda x: ax.annotate(s=f"Group : {x.Group}{x.ids}",
-                                         xy=x.geometry.centroid.coords[0],
-                                         weight='bold', ha='center',
-                                         va='center', size=10),axis=1
-                                         )
+    import string, shapely, geoshapes, geopandas
+    pointLocation = shapely.geometry.Point(0,0)
+    polygonList = geoshapes.splitShape.splitCircle(geoms = pointLocation,
+                                                   circleRadius = 500,
+                                                   incrementdegree = 45,
+                                                   clipInterior = True,
+                                                   innerWidth = 100,
+                                                   getGeom = 'Both'
+                                                   )
+    gdf = geopandas.GeoDataFrame(geometry = polygonList, crs = 'EPSG:3857')
+    gdf['ids'] = range(len(gdf))
+    gdf['Group']= gdf.apply(lambda row : string.ascii_uppercase[int(row.ids)], axis = 1)
+    ax = gdf.plot(figsize=(15, 10), alpha=0.0, edgecolor='k')
+    gdf.plot(column='Group', ax=ax, linewidth=9, cmap='tab20');
+    gdf.apply(lambda x: ax.annotate(s=f"Group : {x.Group}{x.ids}",
+                                    xy=x.geometry.centroid.coords[0],
+                                    weight='bold', ha='center',
+                                    va='center', size=10),axis=1
+                                    )
 
-    .. container:: header
+.. container:: header
 
         *Output Map*
-        
-    .. image:: splitCircle.png
-       :width: 600px
-       :height: 600px
-       :scale: 70 %
-       :alt: Split Circle Output
-       :align: center
+.. image:: ../images/splitCircle.png
+   :scale: 80 %
+   :alt: Split Circle Output
+   :align: center
 
 ----------------------------------------------------------------------------------------------------
-
-
-.. _splitCircleSquare:: Split Circle Square
 
 splitCircleSquare
 -----------------
 
 *To get splited polgon and partial circle for circular area. i.e. Experimental Design*
 
-.. Note::
+:module: geoshapes.splitShape.splitSquare
 
-    :module: geosolution.splitShape.splitSquare
-    
-    .. function:: splitCircleSquare (geoms:shapely.geometry.Point, circleRadius:float, rotation:int)
-       
-       
-       :param geoms: single shapely Point geometry
-       :type geoms: shapely.geometry.Point
-       :param circleRadius: Insert the sideLength of the square geometry in feet
-       :type circleRadius: float
-       :param rotation: Rotation angle in degree, insert the degree that required, Default is 45.
-       :type rotation: int, optional
-       :return: List of shapely polygon or multipolygon geometry
-       :rtype: list
+.. function:: splitCircleSquare (geoms:shapely.geometry.Point, circleRadius:float, rotation:int)
+   
+   
+   :param geoms: single shapely Point geometry
+   :type geoms: shapely.geometry.Point
+   :param circleRadius: Insert the sideLength of the square geometry in feet
+   :type circleRadius: float
+   :param rotation: Rotation angle in degree, insert the degree that required, Default is 45.
+   :type rotation: int, optional
+   :return: List of shapely polygon or multipolygon geometry
+   :rtype: list
 
 
 .. container:: 
