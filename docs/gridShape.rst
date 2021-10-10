@@ -42,7 +42,7 @@ squareGrid
 .. container:: header
 
         *Output Map*
-.. image:: ../images/squareGrid.png
+.. image:: ../docs/images/squareGrid.png
    :scale: 80 %
    :alt: squareGrid Output
    :align: center
@@ -89,7 +89,7 @@ hexagonGrid
 .. container:: header
 
         *Output Map*
-.. image:: ../images/hexagonGrid.png
+.. image:: ../docs/images/hexagonGrid.png
    :scale: 100%
    :alt: shexagonGrid Output
    :align: center
@@ -135,7 +135,7 @@ sanitizeGrid
 .. container:: header
 
         *Output Map*
-.. image:: ../images/sanitizedoGrid.png
+.. image:: ../docs/images/sanitizedoGrid.png
    :scale: 100%
    :alt: hexagonGrid Output
    :align: center

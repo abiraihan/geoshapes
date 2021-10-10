@@ -64,7 +64,7 @@ splitLatin
 .. container:: header
 
         *Output Map*
-.. image:: ../images/latinSquare.png
+.. image:: ../docs/images/latinSquare.png
    :scale: 80 %
    :alt: Split latin Square Output
    :align: center
@@ -145,7 +145,7 @@ splitGeom
 .. container:: header
 
         *Output Map*
-.. image:: ../images/splitGeom.png
+.. image:: ../docs/images/splitGeom.png
    :scale: 80 %
    :alt: Split Geometry Output
    :align: center
@@ -229,7 +229,7 @@ splitCircle
 .. container:: header
 
         *Output Map*
-.. image:: ../images/splitCircle.png
+.. image:: ../docs/images/splitCircle.png
    :scale: 80 %
    :alt: Split Circle Output
    :align: center
@@ -301,7 +301,7 @@ splitCircleSquare
 .. container:: header
 
         *Output Map*
-.. image:: ../images/splitCircleSquare.png
+.. image:: ../docs/images/splitCircleSquare.png
    :scale: 80 %
    :alt: Split Circle Sqaure Output
    :align: center
@@ -378,7 +378,7 @@ splitSquare
 .. container:: header
 
         *Output Map*
-.. image:: ../images/splitSquare.png
+.. image:: ../docs/images/splitSquare.png
    :scale: 80 %
    :alt: Split Sqaure Output
    :align: center

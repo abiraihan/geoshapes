@@ -56,7 +56,7 @@ gdf.apply(lambda x: ax.annotate(
 _____
 
 <p align="center">
-<img src="https://github.com/abiraihan/geoshapes/blob/master/images/splitCircle.png" width="600">
+<img src="https://github.com/abiraihan/geoshapes/blob/master/docs/images/splitCircle.png" width="600">
 </p>
 
 #####        geoshapes.splitShape.splitLatin
@@ -95,7 +95,7 @@ featureGeoms.apply(
 _____
 
 <p align="center">
-<img src="https://github.com/abiraihan/geoshapes/blob/master/images/latinSquare.png" width="600">
+<img src="https://github.com/abiraihan/geoshapes/blob/master/docs/images/latinSquare.png" width="600">
 </p>
 
 
