@@ -1,3 +1,6 @@
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/abiraihan/geoshapes/b49f8bad7549b2bb581df6700acd26cf180f3c99?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb
+
 **splitShape**
 ==============
 splitShape module functionality involved in geometry splitting as creating geometry for experimetal design plot / trial design.
