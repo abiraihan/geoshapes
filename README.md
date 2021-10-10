@@ -24,8 +24,8 @@ pip install geoshapes
 #### *3. <a href="./docs/gridShape.rst">geoshapes.gridShape</a> | Create grid for a given boundary geometry.*
 
 
-### Run example code on ![Binder](https://mybinder.org/badge_logo.svg)
-You can run geoshapes example code on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes/614bb94307f59b21f1bd485375e6c66c6e1757ff?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb) without installing geoshapes library in your python environment.
+### Run example code on mybinder.org
+You can run geoshapes example code on [![Binder](https://mybinder.org/v2/gh/abiraihan/geoshapes/614bb94307f59b21f1bd485375e6c66c6e1757ff?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb) without installing geoshapes library in your python environment.
 It doesn't requie any dependency to install and you can run all those example
 
 
