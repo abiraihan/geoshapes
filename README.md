@@ -5,7 +5,7 @@ To split Polygon geometry into different shape that required to create
 experimental plot / Trial design. It creates/re-creates experimental
 plot design to summerize data to geospatially enabled space for next-step
 mathematical modelling.
-#### *<a href="https://mybinder.org/v2/gh/abiraihan/geoshapes.git/master">Binder</a>* 
+#### *<a href="https://mybinder.org/v2/gh/abiraihan/geoshapes/b49f8bad7549b2bb581df6700acd26cf180f3c99?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb">Binder</a>* 
 #### * *<a href="./docs/usage.rst">Required Library</a> | Required python library prior to install geoshapes*
 
 ### Install geoshapes
