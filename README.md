@@ -23,6 +23,8 @@ pip install geoshapes
 #### *2. <a href="./docs/checkShape.rst">geoshapes.checkShape</a> | Check geometry validity & return/report valid geometry.*
 #### *3. <a href="./docs/gridShape.rst">geoshapes.gridShape</a> | Create grid for a given boundary geometry.*
 
+You can run geoshapes example on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes/b49f8bad7549b2bb581df6700acd26cf180f3c99?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb) without installing geoshapes librray in your python environment.
+It doesn't requie any dependency to install and you can run all those example
 
 ### Example
 #####        geoshapes.splitShape.splitCircle

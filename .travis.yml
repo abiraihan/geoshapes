@@ -12,7 +12,7 @@ install:
 
   # Install dependencies
   - conda env create --file=environment.yml
-  - source activate abirpyenv
+  - source activate geoshapes
   - conda install pytest-cov
   - conda install codecov 
 
