@@ -8,6 +8,11 @@ Welcome to geoshapes's Documentation!
 
 .. image:: https://mybinder.org/badge_logo.svg
  :target: https://mybinder.org/v2/gh/abiraihan/geoshapes.git/master
+
+
+.. image:: https://www.repostatus.org/badges/latest/active.svg
+   :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
+   :target: https://www.repostatus.org/#active
  
 .. note::
    This project is under active development.
