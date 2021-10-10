@@ -4,8 +4,9 @@ To split Polygon geometry into different shape that required to create
 experimental plot / Trial design. It creates/re-creates experimental
 plot design to summerize data to geospatially enabled space for next-step
 mathematical modelling.
+#### *<a href="./docs/usage.rst">required Library</a>*
 
-### Install library
+### Install geoshapes
 ```python
 pip install geoshapes
 ```
@@ -14,7 +15,7 @@ pip install geoshapes
 
 #### *1. <a href="./docs/splitShape.rst">geoshapes.splitShape</a> | Splits/create geometry for experimetal design.*
 #### *2. <a href="./docs/checkShape.rst">geoshapes.checkShape</a> | Check geometry validity & return/report valid geometry.*
-#### *3. <a href="./docs/gridShape.rst">geoshapes.gridShape</a> | create grid for a given boundary geometry.*
+#### *3. <a href="./docs/gridShape.rst">geoshapes.gridShape</a> | Create grid for a given boundary geometry.*
 
 
 ### Example
