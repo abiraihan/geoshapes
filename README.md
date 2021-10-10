@@ -4,7 +4,7 @@ To split Polygon geometry into different shape that required to create
 experimental plot / Trial design. It creates/re-creates experimental
 plot design to summerize data to geospatially enabled space for next-step
 mathematical modelling.
-#### * -- |<a href="./docs/usage.rst">Required Library to Install</a> | python librray required to install*
+#### *- <a href="./docs/usage.rst">Required Library</a> | Required python library prior to install geoshapes*
 
 ### Install geoshapes
 ```python
