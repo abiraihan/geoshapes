@@ -19,6 +19,6 @@ install:
   - conda list
   - python -c "import geopandas; geopandas.show_versions();"
 script:
-  - pytest --cov-report xml --cov=movingpandas
+  - pytest --cov-report xml --cov=geoshapes
 after_success:
   - codecov # submit coverage  
