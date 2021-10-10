@@ -10,7 +10,7 @@ mathematical modelling.
 pip install geoshapes
 ```
 
-### Module Index:
+### Module Summery:
 
 #### *1. <a href="./docs/splitShape.rst">geoshapes.splitShape</a>*
 #### *2. <a href="./docs/checkShape.rst">geoshapes.checkShape</a>*
