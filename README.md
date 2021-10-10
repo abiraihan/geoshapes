@@ -10,6 +10,12 @@ experimental plot / Trial design. It creates/re-creates experimental
 plot design to summerize data to geospatially enabled space for next-step
 mathematical modelling.
 
+
+### Run example code on mybinder.org
+You can run geoshapes example code on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes/8d441eef49cd387980a86ec230a84fde012390a3?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb) without installing geoshapes library in your python environment.
+It doesn't requie any dependency to install and you can run all those example
+
+
 #### * *<a href="./docs/usage.rst">Required Library</a> | Required python library prior to install geoshapes*
 
 ### Install geoshapes
@@ -22,12 +28,6 @@ pip install geoshapes
 #### *1. <a href="./docs/splitShape.rst">geoshapes.splitShape</a> | Splits/create geometry for experimetal design.*
 #### *2. <a href="./docs/checkShape.rst">geoshapes.checkShape</a> | Check geometry validity & return/report valid geometry.*
 #### *3. <a href="./docs/gridShape.rst">geoshapes.gridShape</a> | Create grid for a given boundary geometry.*
-
-
-### Run example code on mybinder.org
-You can run geoshapes example code on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes/614bb94307f59b21f1bd485375e6c66c6e1757ff?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb) without installing geoshapes library in your python environment.
-It doesn't requie any dependency to install and you can run all those example
-
 
 
 ### Example
