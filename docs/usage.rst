@@ -1,6 +1,3 @@
-Installation
-============
-
 Required Library
 ----------------
 
@@ -10,9 +7,6 @@ Required Library
 4. geopandas == 0.9.0
 5. numpy == 1.21.2
 
-
-.. _Installation::
-
 Installation
 ------------
 
@@ -20,4 +14,4 @@ To use geoshapes, first install it using pip:
 
 .. code-block:: console
 
-   $ pip install geoshapes
+   pip install geoshapes
