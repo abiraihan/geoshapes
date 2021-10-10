@@ -1,6 +1,10 @@
 .. image:: https://mybinder.org/badge_logo.svg
  :target: https://mybinder.org/v2/gh/abiraihan/geoshapes/b49f8bad7549b2bb581df6700acd26cf180f3c99?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb
 
+.. image:: https://www.repostatus.org/badges/latest/active.svg
+   :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
+   :target: https://www.repostatus.org/#active
+
 **splitShape**
 ==============
 splitShape module functionality involved in geometry splitting as creating geometry for experimetal design plot / trial design.
