@@ -1,10 +1,11 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes.git/master)
 # geoshapes
 Geospatial Experimental Design with GIS Analytics.
 To split Polygon geometry into different shape that required to create
 experimental plot / Trial design. It creates/re-creates experimental
 plot design to summerize data to geospatially enabled space for next-step
 mathematical modelling.
-#### *<a href="https://notebooks.gesis.org/binder/v2/gh/abiraihan/geoshapes/5cff0bf6a65fa57b0814bef9be20038baebbd255?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb">Binder</a>* 
+#### *<a href="https://mybinder.org/v2/gh/abiraihan/geoshapes.git/master">Binder</a>* 
 #### * *<a href="./docs/usage.rst">Required Library</a> | Required python library prior to install geoshapes*
 
 ### Install geoshapes
