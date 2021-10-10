@@ -6,6 +6,9 @@
 Welcome to geoshapes's Documentation!
 =======================================
 
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/abiraihan/geoshapes.git/master
+ 
 .. note::
    This project is under active development.
 
