@@ -8,6 +8,9 @@ Welcome to geoshapes's Documentation!
 
 .. image:: https://mybinder.org/badge_logo.svg
  :target: https://mybinder.org/v2/gh/abiraihan/geoshapes.git/master
+
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.5559438.svg
+   :target: https://doi.org/10.5281/zenodo.5559438
  
 .. note::
    This project is under active development.
