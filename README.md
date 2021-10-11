@@ -2,7 +2,6 @@
 [![PyPI version](https://badge.fury.io/py/geoshapes.svg)](https://badge.fury.io/py/geoshapes)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes.git/master)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![build status](https://app.travis-ci.com/abiraihan/geoshapes.svg?branch=master)](https://app.travis-ci.com/github/abiraihan/geoshapes)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5559438.svg)](https://doi.org/10.5281/zenodo.5559438)
 
 Geospatial Experimental Design with GIS Analytics.
