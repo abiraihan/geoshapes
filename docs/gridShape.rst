@@ -1,3 +1,13 @@
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/abiraihan/geoshapes/8d441eef49cd387980a86ec230a84fde012390a3?urlpath=lab%2Ftree%2Fexample%2FgridShape.ipynb
+
+.. image:: https://www.repostatus.org/badges/latest/active.svg
+   :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
+   :target: https://www.repostatus.org/#active
+
+.. image:: https://badge.fury.io/py/geoshapes.svg
+    :target: https://badge.fury.io/py/geoshapes
+
 **gridShape**
 ==============
 gridShape module functionality involved to create grid geometry for a given boundary geometry.
