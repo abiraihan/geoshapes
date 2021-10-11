@@ -1,6 +1,6 @@
 # geoshapes
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes.git/master)
 [![PyPI version](https://badge.fury.io/py/geoshapes.svg)](https://badge.fury.io/py/geoshapes)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes.git/master)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![build status](https://app.travis-ci.com/abiraihan/geoshapes.svg?branch=master)](https://app.travis-ci.com/github/abiraihan/geoshapes)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5559438.svg)](https://doi.org/10.5281/zenodo.5559438)
@@ -32,8 +32,8 @@ pip install geoshapes
 
 
 ### Example
-#####        geoshapes.splitShape.splitCircle
-######         - Split a circle geometry with defined indentifier as a treatment plot
+##### geoshapes.splitShape.splitCircle
+###### - Split a circle geometry with defined indentifier as a treatment plot
 ```python
 import string, shapely, geoshapes, geopandas
 pointLocation = shapely.geometry.Point(0,0)
@@ -73,8 +73,8 @@ _____
 <img src="https://github.com/abiraihan/geoshapes/blob/master/docs/images/splitCircle.png" width="600">
 </p>
 
-#####        geoshapes.splitShape.splitLatin
-######         - Split a square geometry with defined indentifier as a latin square treatment plot
+##### geoshapes.splitShape.splitLatin
+###### - Split a square geometry with defined indentifier as a latin square treatment plot
 ```python
 import string, shapely, geoshapes, geopandas
 point = shapely.geometry.Point(0,0)
@@ -108,6 +108,7 @@ featureGeoms.apply(
   Figure : splitLatin
 _____
 
+[![Latin Square](https://github.com/abiraihan/geoshapes/blob/master/docs/images/latinSquare.png)
 <p align="center">
 <img src="https://github.com/abiraihan/geoshapes/blob/master/docs/images/latinSquare.png" width="600">
 </p>
