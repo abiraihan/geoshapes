@@ -10,7 +10,7 @@ setup(
   author_email = 'abirraihan.urp@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/abiraihan/geoshapes',   # Provide either the link to your github or to your website
   download_url = 'https://github.com/abiraihan/geoshapes/archive/refs/tags/geoshapesv0.0.3.tar.gz',    # I explain this later on
-  keywords = ['experimental design', 'spatial analysis', 'interpolation'],   # Keywords that define your package best
+  keywords = ['experimental design', 'spatial analysis'],   # Keywords that define your package best
   install_requires=[
       'numpy',
       'pandas',
