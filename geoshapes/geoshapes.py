@@ -804,6 +804,7 @@ class gridShape:
         Return a hexagon grid, based on the shape of *gdf* and on a *spacing* value (in
         units of *gdf*). If cut=False, the grid will not be intersected with *gdf*
         (i.e it makes a grid on the bounding-box of *gdf*).
+        
         Parameters
         ----------
         gdf: GeoDataFrame

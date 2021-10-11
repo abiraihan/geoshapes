@@ -79,7 +79,7 @@ hexagonGrid
   bounds = fileData.geometry[0]
   dr = geopandas.GeoDataFrame(crs = 'EPSG:3857', geometry = [bounds])
   dr = dr.to_crs('EPSG:4326')
-  hexagon = geoshapes.gridShape.hexagonGridGrid(dr, 5, cut = True)
+  hexagon = geoshapes.gridShape.hexagonGrid(dr, 5, cut = True)
   hexagon.plot(
         figsize=(8, 7),
         alpha=0.3,
