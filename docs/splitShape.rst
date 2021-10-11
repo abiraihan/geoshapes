@@ -5,6 +5,9 @@
    :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
    :target: https://www.repostatus.org/#active
 
+.. image:: https://badge.fury.io/py/geoshapes.svg
+    :target: https://badge.fury.io/py/geoshapes
+
 **splitShape**
 ==============
 splitShape module functionality involved in geometry splitting as creating geometry for experimetal design plot / trial design.
