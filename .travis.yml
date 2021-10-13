@@ -1,6 +1,6 @@
 language: python
 python:
-  - "3.7"
+  - "3.7.5"
 install:
  # Install conda
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
@@ -11,7 +11,7 @@ install:
   - conda info
 
   # Install dependencies
-  - conda env create --file=environment.yml
+  #- conda env create --file=environment.yml
   - source activate geoshapes
   - conda install geopandas
   - conda install pytest-cov
