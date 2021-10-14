@@ -8,14 +8,14 @@
 .. image:: https://badge.fury.io/py/geoshapes.svg
     :target: https://badge.fury.io/py/geoshapes
 
-**splitShape**
-==============
+:book: **splitShape**
+=====================
 splitShape module functionality involved in geometry splitting as creating geometry for experimetal design plot / trial design.
 
-splitLatin
------------
+:earth_asia: splitLatin
+-----------------------
 
-*Create a Latin Square experimental design with equal size as a polygon*
+:arrow_forward: *Create a Latin Square experimental design with equal size as a polygon*
 
 :module: geoshapes.splitShape.splitLatin
 
