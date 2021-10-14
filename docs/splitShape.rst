@@ -12,7 +12,6 @@
 ==============
 splitShape module functionality involved in geometry splitting as creating geometry for experimetal design plot / trial design.
 
-:earth_asia:
 splitLatin
 -----------
 
