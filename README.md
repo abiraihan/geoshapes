@@ -31,7 +31,7 @@ pip install geoshapes
 - [x]  **<a href="./docs/gridShape.rst">geoshapes.gridShape</a> :arrow_forward: Create grid for a given boundary geometry**
 - [ ]   **geoshapes.mergeShape :arrow_forward: Merge splited geometry for a defined number of geometry**
 - [ ]   **geoshapes.selectGeom :arrow_forward: Check geometry shapes and stores values**
-- [ ]   **geoshapes.utils :arrow_forward: Check geometry validity, merge multiple dataframe and delete duplicate geometry from the dataframe**
+- [ ]   **geoshapes.utils :arrow_forward: Check geometry type, merge multiple dataframe and delete duplicate geometry**
 
 
 ### Example
