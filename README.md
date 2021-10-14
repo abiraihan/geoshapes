@@ -13,7 +13,7 @@ mathematical modelling.
 
 
 ### Run example code on mybinder.org
-You can run geoshapes example code on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes/8d441eef49cd387980a86ec230a84fde012390a3?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb) without installing any pthon library in your python environment.
+You can run geoshapes example code on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes/8d441eef49cd387980a86ec230a84fde012390a3?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb) without installing any library in your python environment.
 It doesn't requie any dependency to install and you can run all those example from the mybinder.org
 
 

@@ -1,3 +1,10 @@
+.. image:: https://www.repostatus.org/badges/latest/active.svg
+   :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
+   :target: https://www.repostatus.org/#active
+
+.. image:: https://badge.fury.io/py/geoshapes.svg
+    :target: https://badge.fury.io/py/geoshapes
+
 **mergeShape**
 ==============
 mergeShape module functionality involved to merge splited geometry for a defined number of geometry.
