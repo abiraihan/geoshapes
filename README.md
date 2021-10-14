@@ -5,7 +5,7 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5559438.svg)](https://doi.org/10.5281/zenodo.5559438)
 
-:memo: Experimental Design for Geospatial Analytics.
+:memo: Experimental design for geospatial analytics.
 To split Polygon geometry into different shape that required to create
 experimental plot / Trial design. It creates/re-creates experimental
 plot design to summerize data to geospatially enabled space for next-step
