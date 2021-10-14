@@ -71,7 +71,7 @@ gdf.apply(lambda x: ax.annotate(
 
 ### :world_map: splitsCircle
 
-![Split CIrcle](https://github.com/abiraihan/geoshapes/blob/master/docs/images/splitCircle.png)
+![Split CIrcle](https://github.com/abiraihan/geoshapes/blob/master/docs/images/splitCircle.png?style-centerme)
 _____
 
 
