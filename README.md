@@ -34,9 +34,9 @@ pip install geoshapes
 - [ ]   **geoshapes.utils :arrow_forward: Check geometry type, merge multiple dataframe and delete duplicate geometry**
 
 
-### Example
-##### :earth_asia: geoshapes.splitShape.splitCircle
-###### - Split a circle geometry with defined indentifier as a treatment plot
+## :pencil2: Example
+### :earth_asia: geoshapes.splitShape.splitCircle
+#### :arrow_forward: Split a circle geometry with defined indentifier as a treatment plot
 ```python
 import string, shapely, geoshapes, geopandas
 pointLocation = shapely.geometry.Point(0,0)
@@ -69,15 +69,15 @@ gdf.apply(lambda x: ax.annotate(
     )
 ```
 
-:world_map: splitsCircle
+### :world_map: splitsCircle
 
 ![Split CIrcle](https://github.com/abiraihan/geoshapes/blob/master/docs/images/splitCircle.png)
 _____
 
 
 
-##### :earth_asia: geoshapes.splitShape.splitLatin
-###### - Split a square geometry with defined indentifier as a latin square treatment plot
+### :earth_asia: geoshapes.splitShape.splitLatin
+#### :arrow_forward: Split a square geometry with defined indentifier as a latin square treatment plot
 ```python
 import string, shapely, geoshapes, geopandas
 point = shapely.geometry.Point(0,0)
@@ -108,7 +108,7 @@ featureGeoms.apply(
     )
 ```
 
-:world_map: splitLatin
+### :world_map: splitLatin
 
 ![Latin Square](https://github.com/abiraihan/geoshapes/blob/master/docs/images/latinSquare.png)
 _____
