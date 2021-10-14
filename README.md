@@ -110,7 +110,7 @@ featureGeoms.apply(
 
 ### :world_map: splitLatin
 
-![Latin Square](https://github.com/abiraihan/geoshapes/blob/master/docs/images/latinSquare.png)
+![Latin Square](https://github.com/abiraihan/geoshapes/blob/master/docs/images/latinSquare.png) `#f03c15`
 _____
 
 
