@@ -25,7 +25,7 @@ pip install geoshapes
 ```
 
 ### Module Summery:
-&nbsp;
+
 - [x]  **<a href="./docs/splitShape.rst">geoshapes.splitShape</a> :arrow_forward: Splits/create geometry for experimetal design**
 - [x]  **<a href="./docs/checkShape.rst">geoshapes.checkShape</a> :arrow_forward: Check geometry validity & return/report valid geometry**
 - [x]  **<a href="./docs/gridShape.rst">geoshapes.gridShape</a> :arrow_forward: Create grid for a given boundary geometry**
