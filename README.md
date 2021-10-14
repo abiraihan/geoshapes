@@ -17,7 +17,7 @@ You can run geoshapes example code on [![Binder](https://mybinder.org/badge_logo
 It doesn't requie any dependency to install and you can run all those example from the mybinder.org
 
 
-#### :books: **<a href="./docs/usage.rst">Required Library</a> | Required python library prior to install geoshapes*
+#### :books: **<a href="./docs/usage.rst">Required Library</a> :arrow_forward: Required python library prior to install geoshapes**
 
 ### Install geoshapes
 ```python
