@@ -1,3 +1,6 @@
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/abiraihan/geoshapes/b8336cb953c2060a7b0209b7732db6859e26ea80?urlpath=lab%2Ftree%2Fexample%2FUntitled.ipynb
+
 .. image:: https://www.repostatus.org/badges/latest/active.svg
    :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
    :target: https://www.repostatus.org/#active
@@ -31,25 +34,34 @@ mergePolygon
 
 .. code-block:: python
 
-  import geoshapes, gropandas
-  
-  fileData = geopandas.read_file("./polygonShapefileData.shp")
-  bounds = fileData.geometry[0]
-  dr = geopandas.GeoDataFrame(crs = 'EPSG:3857', geometry = [bounds])
-  dr = dr.to_crs('EPSG:4326')
-  square = geoshapes.gridShape.squareGrid(dr, 10, cut = True)
-  square.plot(
-        figsize=(8, 7),
-        alpha=0.3,
-        edgecolor='k'
+    import string, shapely, geoshapes, geopandas
+    
+    polys = shapely.geometry.Polygon([(0, 0), (0,5), (16, 5), (16, 0)])
+    
+    splitGeometry = geoshapes.splitShape.splitGeom(polys, 50, rotation = 120)
+    geoData = geoshapes.mergeShape.mergePolygon(splitGeometry, 3)
+    geoData['ids'] = range(len(geoData))
+    
+    ax = geoData.plot(figsize = (7,5), alpha = 0.9, cmap = 'Spectral', edgecolor = 'k', linewidth = 2)
+    ax.set_title('mergeShape.mergePolygon | Merged Polygon : 3')
+    
+    geoData.apply(
+        lambda x: ax.annotate(
+            s=f"{x.ids+1}",
+            xy=x.geometry.centroid.coords[0],
+            ha='center',
+            va='center',
+            size=10
+            ),
+        axis=1
         )
   
 .. container:: header
 
         *Output Map*
-.. image:: ../docs/images/squareGrid.png
+.. image:: ../docs/images/mergePolygon.png
    :scale: 80 %
-   :alt: squareGrid Output
+   :alt: mergePolygon Output
    :align: center
 
 ----------------------------------------------------------------------------------------------------
