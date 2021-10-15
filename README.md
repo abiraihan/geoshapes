@@ -26,11 +26,11 @@ pip install geoshapes
 
 ### Module Summery:
 
-- [x]  **<a href="./docs/splitShape.rst">geoshapes.splitShape</a> :arrow_forward: Splits/create geometry for experimetal design :arrow_forward: :notebook: <a href="./example/splitShape.ipynb">See Tutorials on splitShape</a>**
-- [x]  **<a href="./docs/checkShape.rst">geoshapes.checkShape</a> :arrow_forward: Check geometry validity & return/report valid geometry**
-- [x]  **<a href="./docs/gridShape.rst">geoshapes.gridShape</a> :arrow_forward: Create grid for a given boundary geometry**
-- [x]  **<a href="./docs/mergeShape.rst">geoshapes.mergeShape</a> :arrow_forward: Merge splited geometry for a defined number of geometry**
-- [ ]   **geoshapes.selectGeom :arrow_forward: Check geometry shapes and stores values**
+- [x]  **<a href="./docs/splitShape.rst">geoshapes.splitShape</a> :arrow_forward: Splits geometry :arrow_forward: :notebook: <a href="./example/splitShape.ipynb">See Tutorials on splitShape</a>**
+- [x]  **<a href="./docs/checkShape.rst">geoshapes.checkShape</a> :arrow_forward: Check geometry validity**
+- [x]  **<a href="./docs/gridShape.rst">geoshapes.gridShape</a> :arrow_forward: Create grid for geometry :arrow_forward: :notebook: <a href="./example/gridShape.ipynb">See Tutorials on gridShape</a>**
+- [x]  **<a href="./docs/mergeShape.rst">geoshapes.mergeShape</a> :arrow_forward: Merge splited geometry :arrow_forward: :notebook: <a href="./example/mergeShape.ipynb">See Tutorials on mergeShape</a>**
+- [ ]   **geoshapes.selectGeom :arrow_forward: Check geometry shapes and store values**
 - [ ]   **geoshapes.utils :arrow_forward: Check geometry type, merge multiple dataframe and delete duplicate geometry**
 
 
