@@ -17,12 +17,12 @@ sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'geosolution'
+project = 'geoshapes'
 copyright = '2021, Abir Raihan'
 author = 'Abir Raihan'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.0.4'
 
 
 # -- General configuration ---------------------------------------------------
