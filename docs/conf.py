@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'geosolution'
+project = 'geoshapes'
 copyright = '2021, Abir Raihan'
 author = 'Abir Raihan'
 
