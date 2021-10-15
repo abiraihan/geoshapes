@@ -55,10 +55,20 @@ mergePolygon
             ),
         axis=1
         )
-  
+
+.. container:: header
+
+        *Input Polygon*
+        
+.. image:: ../docs/images/mergePolygonInput.png
+   :scale: 80 %
+   :alt: splitedPolygon Input
+   :align: center
+   
 .. container:: header
 
         *Output Map*
+
 .. image:: ../docs/images/mergePolygon.png
    :scale: 80 %
    :alt: mergePolygon Output
