@@ -7,7 +7,7 @@
 
 :memo: Experimental design for geospatial analytics.
 To split Polygon geometry into different shape that required to create
-experimental plot / Trial design. It creates/re-creates experimental
+experimental plot / trial design. It creates experimental
 plot design to summerize data to geospatially enabled space for next-step
 mathematical modelling.
 
