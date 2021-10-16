@@ -88,3 +88,81 @@ mergePolygon
    :align: center
 
 ----------------------------------------------------------------------------------------------------
+
+mergeSilevers
+-------------
+
+*Merge silever geometry (smaller in size than other geometry) with its neighbor geometry*
+
+:module: geoshapes.mergeShape.mergeSilevers
+
+.. function:: mergeSilevers(geomData, splitGeoms:int)
+
+   :param geomData: list of shapely polygon geometry
+   :type geomData: list
+   :param splitGeoms: least Number of geometry that should be returned after dissolve silever.
+   :type splitGeoms: int
+   :return: A list of shapely polygon collection
+   :rtype: list
+    
+.. container:: header
+
+    **Code Block**
+
+.. code-block:: python
+
+    import shapely, geoshapes, geopandas
+    polys = shapely.geometry.Polygon([(0, 0), (0,5), (5, 3), (4, 2), (7, 0)])
+    
+    
+    #Input Polygon geometry for mergePolygon function
+    splitGeometry = geoshapes.splitShape.splitGeom(polys,4, rotation = 120)
+    splitGeometry['ids'] = range(len(splitGeometry))
+    ax1 = splitGeometry.plot(figsize = (7,5), alpha = 0.9, cmap = 'Spectral', edgecolor = 'k', linewidth = 2)
+    ax1.set_title('splitShape.splitGeom | splited Polygon : 4')
+    splitGeometry.apply(
+        lambda x: ax1.annotate(
+            s=f"{x.ids+1}",
+            xy=x.geometry.centroid.coords[0],
+            ha='center',
+            va='center',
+            size=15
+            ),
+        axis=1
+        )
+    
+    # Output Polygon geometry for mergePolygon function
+    geoData = geopandas.GeoDataFrame(geometry = geoshapes.mergeShape.mergeSilevers([i for i in splitGeometry.geometry], 3))
+    geoData['ids'] = range(len(geoData))
+    ax = geoData.plot(figsize = (7,5), alpha = 0.9, cmap = 'Spectral', edgecolor = 'k', linewidth = 2)
+    ax.set_title('mergeShape.mergeSilevers | Merged Polygon : 3')
+    geoData.apply(
+        lambda x: ax.annotate(
+            s=f"{x.ids+1}",
+            xy=x.geometry.centroid.coords[0],
+            ha='center',
+            va='center',
+            size=15
+            ),
+        axis=1
+        )
+
+.. container:: header
+
+        *Input Polygon*
+        
+.. image:: ../docs/images/mergeSileversInput.png
+   :scale: 80 %
+   :alt: splitedPolygon Input
+   :align: center
+   
+.. container:: header
+
+        *Output Map*
+
+.. image:: ../docs/images/mergeSileversOutput.png
+   :scale: 80 %
+   :alt: mergePolygon Output
+   :align: center
+
+----------------------------------------------------------------------------------------------------

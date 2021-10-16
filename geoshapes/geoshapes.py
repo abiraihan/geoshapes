@@ -1025,7 +1025,7 @@ class mergeShape:
         Returns
         -------
         mergedGeoms : list
-            - A list of shapely polygon collection
+            - A list of shapely polygon collections
 
         """
         
