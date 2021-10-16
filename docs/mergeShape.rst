@@ -115,7 +115,7 @@ mergeSilevers
     polys = shapely.geometry.Polygon([(0, 0), (0,5), (5, 3), (4, 2), (7, 0)])
     
     
-    #Input Polygon geometry for mergePolygon function
+    #Input Polygon geometry for mergeSilever function
     splitGeometry = geoshapes.splitShape.splitGeom(polys,4, rotation = 120)
     splitGeometry['ids'] = range(len(splitGeometry))
     ax1 = splitGeometry.plot(figsize = (7,5), alpha = 0.9, cmap = 'Spectral', edgecolor = 'k', linewidth = 2)
@@ -131,7 +131,7 @@ mergeSilevers
         axis=1
         )
     
-    # Output Polygon geometry for mergePolygon function
+    # Output Polygon geometry for mergeSilever function
     geoData = geopandas.GeoDataFrame(geometry = geoshapes.mergeShape.mergeSilevers([i for i in splitGeometry.geometry], 3))
     geoData['ids'] = range(len(geoData))
     ax = geoData.plot(figsize = (7,5), alpha = 0.9, cmap = 'Spectral', edgecolor = 'k', linewidth = 2)
