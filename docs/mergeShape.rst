@@ -270,7 +270,7 @@ mergeoverlaps
    :alt: mergePolygon Output
    :align: center
 
-*Source Geometry Area is : 205000000001.0 square meter*
-*Processed Geometry Area is : 215941666666.67 square meter*
+**Source Geometry Area is : 205000000001.0 square meter**
+**Processed Geometry Area is : 215941666666.67 square meter**
 
 ----------------------------------------------------------------------------------------------------
