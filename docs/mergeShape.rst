@@ -92,7 +92,7 @@ mergePolygon
 mergeSilevers
 -------------
 
-*Merge silever geometry (smaller in size than other geometry) with its neighbor geometry*
+*Merge silever geometry (smaller in size than average size geometry) with its neighbor geometry*
 
 :module: geoshapes.mergeShape.mergeSilevers
 
@@ -113,7 +113,6 @@ mergeSilevers
 
     import shapely, geoshapes, geopandas
     polys = shapely.geometry.Polygon([(0, 0), (0,5), (5, 3), (4, 2), (7, 0)])
-    
     
     #Input Polygon geometry for mergeSilever function
     splitGeometry = geoshapes.splitShape.splitGeom(polys,4, rotation = 120)
