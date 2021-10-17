@@ -264,7 +264,7 @@ mergeoverlaps
 
 .. container:: header
 
-        *Output Map*
+        *Output & Map*
         
 **--| Source Geometry Area is : 205000000001.0 square meter**
 
