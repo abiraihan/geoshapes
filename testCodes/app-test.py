@@ -15,3 +15,12 @@ print(f"Total row number is geodataframe is {len(gdf)}")
 
 areas = sum([i.area*1e10/4046.86 for i in gdf.geometry])
 print(f"Total ares of the geometry is {round(areas, 2)} acre")
+
+fileDatas = geopandas.GeoDataFrame()
+for i in gdf.geometry:
+    f = splitShape.splitGeom(i, 5, rotaion = 100)
+    ft = geopandas.GeoDataFrame(geometry = f, crs = 'EPSG:4326')
+    fileDatas  =fileDatas.append(ft)
+
+fileDatas.reset_index(drop = True, inplace = True)
+print(f"Total row number is geodataframe is {len(fileDatas)}")
