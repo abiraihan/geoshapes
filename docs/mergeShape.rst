@@ -188,11 +188,20 @@ mergeoverlaps
     import shapely, geoshapes, geopandas
     polys = shapely.geometry.Polygon([(0, 0), (0,5), (5, 3), (4, 2), (7, 0)])
     
-    overlapsPoly0 = shapely.geometry.Polygon([(1.75, 0), (0, 0), (0, 5), (1.75, 4.3), (1.75, 0)])
-    overlapsPoly1 = shapely.geometry.Polygon([(3.5, 0), (1.5, 0), (1.5, 4.406666666666667),
-                                              (3.5, 3.6), (3.5, 0)])
-    overlapsPoly2 = shapely.geometry.Polygon([(7, 0), (5.25, 0), (3.5, 0), (3.5, 3.6), (5, 3),
-                                              (4, 2), (5.25, 1.166666666666667), (7, 0)])
+    overlapsPoly0 = shapely.geometry.Polygon(
+        [(1.75, 0), (0, 0), (0, 5),
+         (1.75, 4.3), (1.75, 0)]
+        )
+    
+    overlapsPoly1 = shapely.geometry.Polygon(
+        [(3.5, 0), (1.5, 0), (1.5, 4.406666666666667),
+         (3.5, 3.6), (3.5, 0)]
+        )
+    
+    overlapsPoly2 = shapely.geometry.Polygon(
+        [(7, 0), (5.25, 0), (3.5, 0), (3.5, 3.6), (5, 3),
+         (4, 2), (5.25, 1.166666666666667), (7, 0)]
+        )
     
     #Input Polygon as source geometry for mergeoverlaps function
     sourceGeom = geopandas.GeoDataFrame(geometry = [polys])
@@ -220,7 +229,10 @@ mergeoverlaps
     geoData = geopandas.GeoDataFrame(
         geometry = geoshapes.mergeShape.mergeOverlaps(
             polys,
-            [overlapsPoly0, overlapsPoly1, overlapsPoly2])
+            [overlapsPoly0,
+             overlapsPoly1,
+             overlapsPoly2]
+            )
         )
     
     geoData['ids'] = range(len(geoData))
@@ -230,6 +242,7 @@ mergeoverlaps
         cmap = 'Spectral',
         edgecolor = 'k',
         linewidth = 2)
+    
     ax.set_title('mergeShape.mergeOverlaps | Merged Polygon : 3')
     
     geoData.apply(
