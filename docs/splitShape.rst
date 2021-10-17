@@ -1,6 +1,9 @@
 .. image:: https://mybinder.org/badge_logo.svg
  :target: https://mybinder.org/v2/gh/abiraihan/geoshapes/e2cdbd20e8f32ce8b0f82bdddef4a9529726dd9e?urlpath=lab%2Ftree%2Fexample%2FsplitShape.ipynb
 
+.. image:: https://app.travis-ci.com/abiraihan/geoshapes.svg?branch=master
+    :target: https://app.travis-ci.com/abiraihan/geoshapes
+
 .. image:: https://www.repostatus.org/badges/latest/active.svg
    :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
    :target: https://www.repostatus.org/#active

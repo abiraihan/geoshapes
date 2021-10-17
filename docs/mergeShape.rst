@@ -1,3 +1,6 @@
+.. image:: https://app.travis-ci.com/abiraihan/geoshapes.svg?branch=master
+    :target: https://app.travis-ci.com/abiraihan/geoshapes
+
 .. image:: https://www.repostatus.org/badges/latest/active.svg
    :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
    :target: https://www.repostatus.org/#active
