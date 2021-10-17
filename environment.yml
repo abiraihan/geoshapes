@@ -1,4 +1,4 @@
-name: geoshapes
+name: notebook
 channels:
   - conda-forge
   - defaults
@@ -245,4 +245,4 @@ dependencies:
     - pandas==1.3.3
     - pathlib==1.0.1
     - pillow==8.4.0
-prefix: /srv/conda/envs/geoshapes
+prefix: /srv/conda/envs/notebook
