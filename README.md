@@ -62,7 +62,7 @@ gdf.plot(column='Group',
          ax=ax, linewidth=9,
          cmap='tab20');
 gdf.apply(lambda x: ax.annotate(
-    s=f"Group : {x.Group}{x.ids}",
+    text=f"Group : {x.Group}{x.ids}",
     xy=x.geometry.centroid.coords[0],
     weight='bold', ha='center',
     va='center', size=10),axis=1
@@ -100,7 +100,7 @@ featureGeoms.plot(
     );
 featureGeoms.apply(
     lambda x: ax.annotate(
-        s=f"{x.Group}",
+        text=f"{x.Group}",
         xy=x.geometry.centroid.coords[0],
         ha='center',
         va='center',
