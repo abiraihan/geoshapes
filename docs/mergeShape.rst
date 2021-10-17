@@ -1,6 +1,3 @@
-.. image:: https://mybinder.org/badge_logo.svg
-   :target: https://mybinder.org/v2/gh/abiraihan/geoshapes/b8336cb953c2060a7b0209b7732db6859e26ea80?urlpath=lab%2Ftree%2Fexample%2FUntitled.ipynb
-
 .. image:: https://www.repostatus.org/badges/latest/active.svg
    :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
    :target: https://www.repostatus.org/#active
@@ -173,12 +170,12 @@ mergeoverlaps
 
 :module: geoshapes.mergeShape.mergeoverlaps
 
-.. function:: mergeoverlaps(geomData, splitGeoms:int)
+.. function:: mergeoverlaps(sourceGeoms, processedGeoms:list)
 
-   :param geomData: A single shapely polygon geometry
-   :type geomData: shapely polygon geometry
-   :param splitGeoms: list of shapely polygon geometry collection
-   :type splitGeoms: list
+   :param sourceGeoms: A single shapely polygon geometry
+   :type sourceGeoms: shapely polygon geometry
+   :param processedGeoms: list of shapely polygon geometry collection
+   :type processedGeoms: list
    :return: A list of shapely polygon collection
    :rtype: list
     
