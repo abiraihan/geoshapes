@@ -13,13 +13,12 @@ install:
   # Install dependencies
   - conda env create --file=environment.yml
   - source activate notebook
-  - conda install geopandas
   - conda install pytest-cov
   - conda install codecov 
 
   - conda list
   - python -c "import geopandas; geopandas.show_versions();"
 script:
-  - pytest --cov-report xml --cov=geoshapes
+  - pytest --cov-report xml --cov=notebook
 after_success:
   - codecov # submit coverage  
