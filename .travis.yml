@@ -14,9 +14,9 @@ install:
   - conda env create --file=environment.yml
   - source activate notebook
   - conda install pytest-cov
-  - conda install codecov 
+  - conda install codecov
 
   - conda list
   - python -c "import geopandas; geopandas.show_versions();"
 script:
-  - python example/app-test.py
+  - python testCodes/app-test.py
