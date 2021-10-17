@@ -17,7 +17,6 @@ install:
   - conda install pytest-cov
   - conda install codecov
   - conda list
-  - python -c "import geopandas; geopandas.show_versions();"
 script:
   - python testCodes/app-test.py
 after_success:
