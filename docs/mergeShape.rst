@@ -260,7 +260,11 @@ mergeoverlaps
    :scale: 80 %
    :alt: splitedPolygon Input
    :align: center
-   
+
+**--| Source Geometry Area is : 205000000001.0 square meter**
+
+**--| Processed Geometry Area is : 215941666666.67 square meter**
+
 .. container:: header
 
         *Output Map*
@@ -270,8 +274,6 @@ mergeoverlaps
    :alt: mergePolygon Output
    :align: center
 
-**--| Source Geometry Area is : 205000000001.0 square meter**
 
-**--| Processed Geometry Area is : 215941666666.67 square meter**
 
 ----------------------------------------------------------------------------------------------------
