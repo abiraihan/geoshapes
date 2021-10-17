@@ -266,6 +266,8 @@ mergeoverlaps
         *Output Map*
 
 .. image:: ../docs/images/mergeOverlapGeometry.png
+    --| Source Geometry Area is : 205000000001.0 square meter
+    --| Processed Geometry Area is : 215941666666.67 square meter
    :scale: 80 %
    :alt: mergePolygon Output
    :align: center
