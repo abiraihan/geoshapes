@@ -2,6 +2,7 @@
 [![PyPI version](https://badge.fury.io/py/geoshapes.svg)](https://badge.fury.io/py/geoshapes)
 [![Build Status](https://app.travis-ci.com/abiraihan/geoshapes.svg?branch=master)](https://app.travis-ci.com/abiraihan/geoshapes)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fabiraihan%2Fgeoshapes.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fabiraihan%2Fgeoshapes?ref=badge_small)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes/master)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5559438.svg)](https://doi.org/10.5281/zenodo.5559438)
