@@ -13,9 +13,9 @@ install:
   # Install dependencies
   - conda env create --file=environment.yml
   - source activate notebook
+  - pip install geoshapes==0.0.4
   - conda install pytest-cov
   - conda install codecov
-
   - conda list
   - python -c "import geopandas; geopandas.show_versions();"
 script:
