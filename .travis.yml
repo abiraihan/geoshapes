@@ -12,7 +12,7 @@ install:
 
   # Install dependencies
   - conda env create --file=environment.yml
-  - source activate notebook
+  - source activate geoshapes
   - conda install geopandas
   - conda install pytest-cov
   - conda install codecov 
