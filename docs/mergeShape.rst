@@ -3,7 +3,7 @@
    :target: https://www.repostatus.org/#active
 
 .. image:: https://badge.fury.io/py/geoshapes.svg
-    :target: https://badge.fury.io/py/geoshapes
+   :target: https://badge.fury.io/py/geoshapes
 
 **mergeShape**
 ==============
