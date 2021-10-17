@@ -19,5 +19,6 @@ install:
   - conda list
 script:
   - python testCodes/app-test.py
+  - python geoshapes/geoshapes.py
 after_success:
   - codecov
