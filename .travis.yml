@@ -19,6 +19,4 @@ install:
   - conda list
   - python -c "import geopandas; geopandas.show_versions();"
 script:
-  - pytest --cov-report xml --cov=notebook
-after_success:
-  - codecov # submit coverage  
+  - python example/app-test.py
