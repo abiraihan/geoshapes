@@ -15,7 +15,7 @@ install:
   - source activate geoshapes
   - conda install geopandas
   - conda install pytest-cov
-  - conda install codecov 
+  - conda install codecov
 
   - conda list
   - python -c "import geopandas; geopandas.show_versions();"
