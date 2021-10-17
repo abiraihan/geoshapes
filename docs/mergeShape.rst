@@ -165,3 +165,112 @@ mergeSilevers
    :align: center
 
 ----------------------------------------------------------------------------------------------------
+
+mergeoverlaps
+-------------
+
+*Merge overlapped polygon with its neighbor geometry*
+
+:module: geoshapes.mergeShape.mergeoverlaps
+
+.. function:: mergeoverlaps(geomData, splitGeoms:int)
+
+   :param geomData: A single shapely polygon geometry
+   :type geomData: shapely polygon geometry
+   :param splitGeoms: list of shapely polygon geometry collection
+   :type splitGeoms: list
+   :return: A list of shapely polygon collection
+   :rtype: list
+    
+.. container:: header
+
+    **Code Block**
+
+.. code-block:: python
+
+    import shapely, geoshapes, geopandas
+    polys = shapely.geometry.Polygon([(0, 0), (0,5), (5, 3), (4, 2), (7, 0)])
+    
+    overlapsPoly0 = shapely.geometry.Polygon([(1.75, 0), (0, 0), (0, 5), (1.75, 4.3), (1.75, 0)])
+    overlapsPoly1 = shapely.geometry.Polygon([(3.5, 0), (1.5, 0), (1.5, 4.406666666666667),
+                                              (3.5, 3.6), (3.5, 0)])
+    overlapsPoly2 = shapely.geometry.Polygon([(7, 0), (5.25, 0), (3.5, 0), (3.5, 3.6), (5, 3),
+                                              (4, 2), (5.25, 1.166666666666667), (7, 0)])
+    
+    #Input Polygon as source geometry for mergeoverlaps function
+    sourceGeom = geopandas.GeoDataFrame(geometry = [polys])
+    source = sourceGeom.plot(cmap = 'Spectral', alpha = 0.8, edgecolor = 'k', linewidth = 2)
+    source.set_title('Source Geometry')
+    
+    #Input overlaps Polygon geometry for mergeoverlaps function
+    overlapGeom = geopandas.GeoDataFrame(geometry = [overlapsPoly0, overlapsPoly1, overlapsPoly2])
+    overlapGeom['ids'] = range(len(overlapGeom))
+    
+    ax1 = overlapGeom.plot(figsize = (7,5), alpha = 0.6, cmap = 'Spectral', edgecolor = 'k', linewidth = 2)
+    ax1.set_title('Overlaps Geometry | Overlap Polygon is between 1 & 2')
+    overlapGeom.apply(
+        lambda x: ax1.annotate(
+            s=f"{x.ids+1}",
+            xy=x.geometry.centroid.coords[0],
+            ha='center',
+            va='center',
+            size=15
+            ),
+        axis=1
+        )
+    
+    # Output Polygon geometry for mergeOverlaps function
+    geoData = geopandas.GeoDataFrame(
+        geometry = geoshapes.mergeShape.mergeOverlaps(
+            polys,
+            [overlapsPoly0, overlapsPoly1, overlapsPoly2])
+        )
+    
+    geoData['ids'] = range(len(geoData))
+    ax = geoData.plot(
+        figsize = (7,5),
+        alpha = 0.8,
+        cmap = 'Spectral',
+        edgecolor = 'k',
+        linewidth = 2)
+    ax.set_title('mergeShape.mergeOverlaps | Merged Polygon : 3')
+    
+    geoData.apply(
+        lambda x: ax.annotate(
+            s=f"{x.ids+1}",
+            xy=x.geometry.centroid.coords[0],
+            ha='center',
+            va='center',
+            size=15
+            ),
+        axis=1
+        )
+
+.. container:: header
+
+        *Input Source Polygon*
+        
+.. image:: ../docs/images/sourceGeometry.png
+   :scale: 80 %
+   :alt: splitedPolygon Input
+   :align: center
+
+.. container:: header
+
+        *Input Overlaps Polygon*
+        
+.. image:: ../docs/images/overlapsGeometry.png
+   :scale: 80 %
+   :alt: splitedPolygon Input
+   :align: center
+   
+.. container:: header
+
+        *Output Map*
+
+.. image:: ../docs/images/mergeOverlapGeometry.png
+   :scale: 80 %
+   :alt: mergePolygon Output
+   :align: center
+
+----------------------------------------------------------------------------------------------------
