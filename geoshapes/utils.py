@@ -7,7 +7,6 @@ Created on Mon Oct 18 09:07:58 2021
 
 import numpy
 import geopandas
-import pandas
 import shapely
 from scipy.spatial import Voronoi
 
