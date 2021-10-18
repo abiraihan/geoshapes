@@ -11,7 +11,7 @@ import pandas
 import shapely
 from scipy.spatial import Voronoi
 
-class polygonDist:
+class polyDistribution:
     
     @classmethod
     def Voronoi(
