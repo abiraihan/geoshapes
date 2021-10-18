@@ -8,6 +8,7 @@ Created on Sun Oct 17 15:56:00 2021
 import numpy as np
 import geopandas
 import pandas
+import rasterio
 from sklearn.neighbors import KNeighborsRegressor
 from pykrige.ok import OrdinaryKriging
 from sklearn.preprocessing import robust_scale
@@ -17,15 +18,11 @@ from pysal.explore import esda
 from pysal.model import spreg
 
 
-
-
-
-
 class interpolation:
     
     def __init__(self,gdf, attribute):
         
-        "parameters are self explained"
+        
         self.gdf=gdf
         self.attribute = attribute
         self.x = gdf.geometry.x.values
