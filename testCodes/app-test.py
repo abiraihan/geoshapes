@@ -20,4 +20,3 @@ print(f"Total ares of the geometry is {round(areas, 2)} acre")
 ft = pandas.concat([i for i in geos])
 area = sum([i.area*1e10/4046.86 for i in ft.geometry])
 print(f"Total ares of the geometry is {round(area, 2)} acre")
-    
