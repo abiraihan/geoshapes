@@ -17,7 +17,6 @@ from pysal.lib import weights
 from pysal.explore import esda
 from pysal.model import spreg
 
-        
 class interpolation:
     
     def __init__(self,gdf, attribute):
