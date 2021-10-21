@@ -6,4 +6,3 @@ from geoshapes.geoshapes import mergeShape
 from geoshapes.geoshapes import selectGeom
 from geoshapes.readData import readData
 from geoshapes.utils import polyDistribution
-from geointerpolation import interpolation
