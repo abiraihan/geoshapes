@@ -8,7 +8,8 @@ circle = splitShape.splitCircle(
     incrementDegree = 5,
     clipInterior = True,
     innerWidth = 30,
-    getGeom = 'Both')
+    getGeom = 'Both'
+    )
 
 gdf = geopandas.GeoDataFrame(geometry = circle[::4])
 print(f"Total row number of geodataframe is : {len(gdf)}")
