@@ -20,10 +20,15 @@ class polyDistribution:
         
         cls._pointGeoms = pointGeoms    
         
-        if isinstance(cls._pointGeoms, str):
+        if isinstance(
+                cls._pointGeoms, str
+                ):
             pointData = geopandas.read_file(cls._pointGeoms)
             if pointData.crs == None: pointData.crs = 'EPSG:4326'
-        elif isinstance(cls._pointGeoms, geopandas.GeoDataFrame):
+        elif isinstance(
+                cls._pointGeoms,
+                geopandas.GeoDataFrame
+                ):
             pointData = cls._pointGeoms
             if pointData.crs == None: pointData.crs = 'EPSG:4326'
         else:
@@ -36,7 +41,9 @@ class polyDistribution:
                 ).convex_hull]
             )
         
-        bndsPoly = shapely.geometry.MultiPoint([i for i in pointData.geometry]).convex_hull
+        bndsPoly = shapely.geometry.MultiPoint(
+            [i for i in pointData.geometry]
+            ).convex_hull
         
         listarray = []
         for pp in pointData.geometry:
@@ -44,18 +51,29 @@ class polyDistribution:
         nparray = numpy.array(listarray)
         vor = Voronoi(nparray)
         lines = [
-            shapely.geometry.LineString(vor.vertices[line])
+            shapely.geometry.LineString(vor.vertices[line]) 
             for line in vor.ridge_vertices
             if -1 not in line
             ]
         
         voronoiPoly = geopandas.GeoDataFrame()
         for poly in shapely.ops.polygonize(lines):
-            singPoly = geopandas.GeoDataFrame(geometry=geopandas.GeoSeries(poly), crs = 'EPSG:4326')
+            singPoly = geopandas.GeoDataFrame(
+                geometry=geopandas.GeoSeries(poly),
+                crs = 'EPSG:4326'
+                )
             voronoiPoly = voronoiPoly.append(singPoly)
         
-        voronoiPoly.reset_index(drop = True, inplace = True)
+        voronoiPoly.reset_index(
+            drop = True,
+            inplace = True
+            )
         
-        geoms = [i.intersection(bndsPoly) for i in voronoiPoly.geometry if i.intersects(bndsPoly)]
+        geoms = [i.intersection(bndsPoly) 
+                 for i in voronoiPoly.geometry
+                 if i.intersects(bndsPoly)]
         
-        return geopandas.GeoDataFrame(geometry = geoms, crs = 'EPSG:4326')
+        return geopandas.GeoDataFrame(
+            geometry = geoms,
+            crs = 'EPSG:4326'
+            )

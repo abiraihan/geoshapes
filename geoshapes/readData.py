@@ -7,9 +7,7 @@ Created on Mon Oct 18 07:32:29 2021
 
 import geopandas
 import pandas
-import shapely
-import fiona
-
+import collections
 
 class readData:
     
@@ -29,6 +27,12 @@ class readData:
             latAttributes = None,
             longAttributes = None,
             polyAttributes = None
+            )
+        fileInfo = collections.namedtuple(
+            'fileInfo',
+            ['filePath', 'sheetNames',
+             'geometry', 'latiAttr',
+             'longAttr', 'polyAttr']
             )
         
         for key, value in data_args.items():
@@ -66,4 +70,10 @@ class readData:
                 )
         else:
             raise ValueError("Only acceptable geometry can be created is Point or, Polygon")
-        return geoData
+        
+        fileDesc = fileInfo(
+            cls._excelFilePath, cls._sheetNames,
+            data_args['shapeGeometry'], data_args['latAttributes'],
+            data_args['longAttributes'], data_args['polyAttributes']
+            )
+        return geoData, fileDesc
