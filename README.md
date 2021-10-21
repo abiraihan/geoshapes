@@ -4,7 +4,6 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fabiraihan%2Fgeoshapes.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fabiraihan%2Fgeoshapes?ref=badge_shield)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/abiraihan/geoshapes/master)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5559438.svg)](https://doi.org/10.5281/zenodo.5559438)
 
 :memo: Experimental design for geospatial analytics.
