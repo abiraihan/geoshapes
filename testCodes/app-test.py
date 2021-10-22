@@ -8,9 +8,10 @@ circle = splitShape.splitCircle(
     incrementDegree = 5,
     clipInterior = True,
     innerWidth = 30,
-    getGeom = 'Both')
-gdf = geopandas.GeoDataFrame(geometry = circle)
+    getGeom = 'Both'
+    )
 
+gdf = geopandas.GeoDataFrame(geometry = circle)
 print(f"Total row number is geodataframe is {len(gdf)}")
 
 areas = sum([i.area*1e10/4046.86 for i in gdf.geometry])
